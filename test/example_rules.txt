@@ -1,0 +1,18 @@
+#if 
+    heart rate > 100
+#then
+    tachycardia
+#end
+#if 
+    symptom_1 
+    symptom_2
+    symptom_3 
+#then 
+    liver_failure
+#end
+#if
+    yellow skin
+#then
+    jaundice
+#end
+#endfile
