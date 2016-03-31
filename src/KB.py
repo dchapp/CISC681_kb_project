@@ -239,6 +239,75 @@ def TEST_forward_chaining(kb, q):
     print forward_chaining(kb, q)
 
 
+def backward_chaining(kb, q):
+    clauses = list(kb.args)
+
+    ### Construct list of symbols known to be true
+    known_true_symbols = []
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            known_true_symbols.append(c)
+
+    ### Construct tables of premises and conclusions keyed by clauses
+    premises = {}
+    conclusions = {}
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            premises[c] = None
+            conclusions[c] = None
+        else:
+            symbols_in_clause = c.args
+            premise_list = []
+            for s in symbols_in_clause:
+                if type(s) == sp.Not:
+                    premise_list.append(sp.Not(s))
+                else:
+                    conclusion = s
+            premises[c] = tuple(premise_list)
+            conclusions[c] = conclusion
+
+    ### Backward chaining algorithm
+    candidates = []
+    for c in clauses:
+        if conclusions[c] == q:
+            ### Check if premises are in kb
+            candidate_premises = list(premises[c])
+
+            #print "Candidate premises: " + str(candidate_premises)
+            #print "Known true symbols: " + str(known_true_symbols)
+
+            m = len(candidate_premises)
+            n = 0
+
+            for p in candidate_premises:
+                if p in known_true_symbols:
+
+                    #print p
+
+                    n += 1
+
+            if m == n:
+                return True
+            else:
+                candidates.append(c)
+    
+    #print "Candidates:"
+    #print candidates
+
+    for c in candidates:
+        #print "Premises of " + str(c)
+        for p in premises[c]:
+            #print p
+            return backward_chaining(kb, p)
+
+    return False
+
+
+def TEST_backward_chaining(kb, q):
+    print backward_chaining(kb, q)
+
+
+
 def main():
     #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
     #parser.add_argument("input", nargs=1, help="File describing mushroom or symptoms")
@@ -282,6 +351,8 @@ def main():
     TEST_resolution(kb_cnf_sentence, kb_query[0])
     print "Testing forward chaining:"
     TEST_forward_chaining(kb_cnf_sentence, kb_query[0])
+    print "Testing backward chaining:"
+    TEST_backward_chaining(kb_cnf_sentence, kb_query[0])
 
 
 main()
