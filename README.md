@@ -4,7 +4,7 @@ This project contains our team's implementation of three inference algorithms an
 ### Inference Algorithms
 1. Resolution
 2. Forward Chaining
-3. ??? (either backward chaining or DPLL)
+3. Backward Chaining
 
 ### Dependencies
 The SymPy module is required
