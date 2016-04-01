@@ -5,41 +5,8 @@ import sympy as sp
 
 from Inference import *
 from TestCases import *
+from Utilities import *
 
-def custom_strip(s):
-    s = s.strip("\n")
-    s = s.strip("\t")
-    s = s.strip(" ")
-    return s
-
-def parse_rule_file(rule_file_name):
-    with open(rule_file_name) as rule_file:
-        ### A list of tuples of the form ([predicate_0, predicate_1, ...], conclusion)
-        rule_list = []
-        in_pred = 0
-        ### Check if parsing a new rule or continuing to parse current rule
-        ### Maintain variables that indicate whether we are looking at predicates 
-        row = custom_strip(rule_file.next())
-        while (row != "#endfile"):
-            #print row
-            if row == "#if":
-                new_rule = ([], [])
-                pred = 1
-            elif row == "#then":
-                pred = 0
-            elif row == "#end":
-                rule_list.append(new_rule)
-            else:
-                if pred == 1:
-                    new_rule[0].append(row)
-                else:
-                    new_rule[1].append(row)
-
-            row = custom_strip(rule_file.next())
-        
-        print "RULE LIST:"
-        print rule_list
-        return rule_list
 
 def parse_fact_file(fact_file_name):
     with open(fact_file_name) as fact_file:
@@ -53,29 +20,65 @@ def parse_fact_file(fact_file_name):
         return fact_list
 
 
+"""
+Generates a list of SymPy implications representing rules in the knowledge base.
+"""
+def parse_rule_file(rule_file_name):
 
-def main():
-    #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
-    #parser.add_argument("input", nargs=1, help="File describing mushroom or symptoms")
-    #parser.add_argument("-m", "--mode", nargs=1, default=[], help="How to process your query.")
-    #args = parser.parse_args()
+    ### Read in rules and separate their antecedents from their conclusions
+    with open(rule_file_name) as rule_file:
+        rule_list = []
+        for line in rule_file:
+            ### Ignore if line is a description or empty
+            if line[0] == "#" or line == "\n":
+                continue
+            ### Otherwise add rule to list
+            else:
+                components = line.split("==>")
+                premises = [custom_strip(x) for x in components[0].split("&")]
+                conclusion = custom_strip(components[1])
+                rule = (premises, conclusion)
+                rule_list.append(rule)
 
-    #parse_rule_file(sys.argv[1])
-    #parse_fact_file(sys.argv[2])
+    ### Format premises and conclusion properly and generate string
+    rules = []
+    for r in rule_list:
+        premises = r[0]
+        conclusion = r[1]
+        premises = [custom_replace(x) for x in premises]
+        conclusion = custom_replace(conclusion)
+        rule_string = "("
+        for p in premises:
+            if p != premises[-1]:
+                rule_string = rule_string + p + " & "
+            else:
+                rule_string = rule_string + p
+        rule_string = rule_string + ") >> " + conclusion
+        rules.append(rule_string)
 
+    ### SymPy-fy
+    rules = [sp.sympify(x) for x in rules]
+
+    return rules
+
+
+
+def run_inference_test_suite():
     ### String representations of the knowledge base (KB)
     ### The KB consists of "facts" which are just literals (negated or not) 
     ### and "rules" which are implications.
     ### WARNING: 'Q' messes up something in SymPy. Don't use 'Q' as a literal anywhere. 
-    kb_facts = ["A", "B", "~C"]
+    #kb_facts = ["A", "B", "~C"]
     #kb_rules = ["(A & B) >> L", "(A & P) >> L", "(B & L) >> M", "(L & M) >> P", "P >> Z"]
     #kb_rules = ["(A & B) >> L", "(A & P) >> L", "(B & L) >> M", "(L & M) >> P"]
-    kb_rules = ["(A & B) >> L", "(A & P) >> L"]
+    #kb_rules = ["(A & B) >> L", "(A & P) >> L"]
+    
+    kb_facts = ["labored_breathing", "liver_failure", "~C"]
+    kb_rules = ["(labored_breathing & liver_failure) >> L", "(labored_breathing & P) >> L", "(liver_failure & L) >> M", "(L & M) >> P", "P >> Z"]
 
     ### String representation of the query
     kb_query = ["Z"]
 
-    
     ### First we convert the KB and the query into types that SymPy can work on
     kb_facts = [sp.sympify(f) for f in kb_facts]
     kb_rules = [sp.sympify(r) for r in kb_rules]
@@ -91,6 +94,7 @@ def main():
         kb_sentence = kb_sentence & k
     kb_cnf_sentence = sp.to_cnf(kb_sentence) # And now the sentence is in CNF
 
+    ### Print test results
     print "Testing resolve:" 
     TEST_resolve()
     print "Testing resolution:"
@@ -100,5 +104,14 @@ def main():
     print "Testing backward chaining:"
     TEST_backward_chaining(kb_cnf_sentence, kb_query[0])
 
+
+def main():
+    #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
+    #parser.add_argument("input", nargs=1, help="File describing mushroom or symptoms")
+    #parser.add_argument("-m", "--mode", nargs=1, default=[], help="How to process your query.")
+    #args = parser.parse_args()
+
+    rules = parse_rule_file(sys.argv[1])
+    run_inference_test_suite()
 
 main()
