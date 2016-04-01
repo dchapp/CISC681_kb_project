@@ -1,0 +1,11 @@
+# Tachycardia rule
+heart rate > 100 ==> tachycardia
+# Jaundice rule
+yellow skin or eyes ==> jaundice
+abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver failure
+altered mental state & myoclonus & seizures ==> encephalopathy
+immense thirst & frequent urination & pain on/around kidneys ==> kidney failure
+
+
+
+
