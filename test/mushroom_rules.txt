@@ -2,8 +2,11 @@
 heart rate > 100 ==> tachycardia
 # Jaundice rule
 yellow skin or eyes ==> jaundice
+# Liver failure rule
 abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver failure
+# Encephalopathy rule
 altered mental state & myoclonus & seizures ==> encephalopathy
+# Kidney failure rule
 immense thirst & frequent urination & pain on/around kidneys ==> kidney failure
 
 
