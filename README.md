@@ -8,10 +8,12 @@ This project contains our team's implementation of three inference algorithms an
 
 ### Dependencies
 The SymPy module is required, and is dependent upon:
+
 1. Python 2.6 or higher
 2. Mpmath, a Python module for arbitrary-precision arithmetic
 
 SymPy can be installed via pip, as can Mpmath, or via your Linux distribution's package manager. More detailed instructions can be found at:
+
 1. http://docs.sympy.org/dev/install.html (If your version of SymPy is 0.7.7 or lower, mpmath is included.)
 2. http://mpmath.org/
 
