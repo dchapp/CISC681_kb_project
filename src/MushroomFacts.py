@@ -54,7 +54,13 @@ def define_properties():
 						  "coma",
 						  "in yunnan china",
 						  "dizziness",
-						  "heart palpitations"]
+						  "heart palpitations",
+						  "back pain",
+						  "insomnia",
+						  "coughing",
+						  "stomach pain",
+						  "peeling skin of the face",
+						  "shrinking of the cerebellum"]
 
     return (mushroom_properties, patient_properties)
 
