@@ -144,7 +144,7 @@ def build_knowledge_base_interactive(rule_file_name):
 
 
 
-def run_inference_test_suite():
+def run_inference_test_suite(query):
     ### String representations of the knowledge base (KB)
     ### The KB consists of "facts" which are just literals (negated or not) 
     ### and "rules" which are implications.
@@ -176,7 +176,7 @@ def run_inference_test_suite():
    # kb_cnf_sentence = sp.to_cnf(kb_sentence) # And now the sentence is in CNF
 
     kb = build_knowledge_base("../test/rules1.txt", "../test/facts1.txt")
-    q  = sp.sympify(custom_replace("t"))
+    q  = sp.sympify(custom_replace(query))
 
     ### Print test results
     #print "Testing resolve:" 
@@ -213,6 +213,6 @@ def main():
 #    print kb_interactive
 #
     print "TESTING INFERENCE ALGORITHMS"
-    run_inference_test_suite()
+    run_inference_test_suite(sys.argv[1])
 
 main()

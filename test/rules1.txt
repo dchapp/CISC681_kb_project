@@ -9,4 +9,4 @@ m & g & l & o ==> t
 t & a & b & f & r ==> i
 h & g ==> r
 b & z ==> h
-
+m & d ==> g
