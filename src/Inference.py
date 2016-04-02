@@ -1,4 +1,5 @@
 import sympy as sp
+from Utilities import contains_sublist
 
 def resolve(i, j):
     clause_i_literals = []
@@ -336,3 +337,68 @@ def clause_is_unit(clause, model):
     return False
 
 
+
+
+def iterative_backward_chaining(kb, q):
+    clauses = list(kb.args)
+
+    ### Construct list of symbols known to be true
+    known_true_symbols = []
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            known_true_symbols.append(c)
+
+    ### Construct tables of premises and conclusions keyed by clauses
+    premises = {}
+    conclusions = {}
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            premises[c] = None
+            conclusions[c] = None
+        else:
+            symbols_in_clause = c.args
+            premise_list = []
+            for s in symbols_in_clause:
+                if type(s) == sp.Not:
+                    premise_list.append(sp.Not(s))
+                else:
+                    conclusion = s
+            premises[c] = tuple(premise_list)
+            conclusions[c] = conclusion
+
+    ### Determine the clauses that can entail the query
+    candidates = []
+    for c in clauses:
+        if conclusions[c] == q:
+            candidates.append(c)
+
+    ### Loop over the candidates
+    for c in candidates:
+        things_to_prove = list(premises[c])
+        under_consideration = []
+        while things_to_prove:
+            t = things_to_prove.pop()
+            ### If known to be true, do nothing
+            if t in known_true_symbols:
+                continue
+            ### Can it proved by anything?
+            elif t not in conclusions.values():
+                continue
+
+            ### See if t can be proved using nothing but known true symbols. 
+            ### If so, add it as a known true symbol. 
+            ### If not, add it's premises to the stack.
+            else:
+                for c in clauses:
+                    if conclusions[c] == t:
+                        things_that_prove_t = list(premises[c])
+                        ### Check if t can be proved with nothing but known true symbols
+                        if contains_sublist(known_true_symbols, things_that_prove_t):
+                            known_true_symbols.append(t)
+                        else:
+                            things_to_prove + things_that_prove_t
+
+            if not things_to_prove:
+                return True
+
+    return False

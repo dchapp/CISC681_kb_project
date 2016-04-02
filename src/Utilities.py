@@ -19,3 +19,7 @@ def custom_replace(s):
     s = s.replace(":", "")
     s = s.replace(" ", "_")
     return s
+
+def contains_sublist(lst, sublst):
+    n = len(sublst)
+    return any((sublst == lst[i:i+n]) for i in xrange(len(lst)-n+1))
