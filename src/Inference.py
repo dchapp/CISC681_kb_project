@@ -280,4 +280,13 @@ def dpll(clauses, symbols, model):
     return False
 
 
+def clause_is_true_in_model(clause, model):
+    return False
+
+def symbol_is_pure(symbol, clauses):
+    return False
+
+def clause_is_unit(clause, model):
+    return False
+
 
