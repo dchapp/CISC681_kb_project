@@ -214,7 +214,6 @@ def backward_chaining(kb, q):
     print premises
     print conclusions
     print q
-    exit()
 
     return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
 
