@@ -85,6 +85,7 @@ def build_knowledge_base(rule_file_name, fact_file_name):
     kb_sentence = kb[0]
     for k in kb[1:]:
         kb_sentence = kb_sentence & k
+
     kb_cnf_sentence = sp.to_cnf(kb_sentence)
     return kb_cnf_sentence
 
@@ -109,7 +110,7 @@ def build_knowledge_base_interactive(rule_file_name):
                 continue
         else:
             response = raw_input("What is the mushroom's " + p + "? ")
-            if response == "?" or "\n":
+            if response == "?" or response == "\n":
                 continue
             else:
                 fact = p + " is " + response
@@ -137,6 +138,7 @@ def build_knowledge_base_interactive(rule_file_name):
     kb_sentence = kb[0]
     for k in kb[1:]:
         kb_sentence = kb_sentence & k
+
     kb_cnf_sentence = sp.to_cnf(kb_sentence)
     return kb_cnf_sentence
 
