@@ -14,7 +14,10 @@
 \maketitle
 
 \section{Introduction}
-Due to the wide variety of human ailments and the limited capacity of human medical expertise, artificial intelligence knowledge systems (KS) are increasingly finding use in real diagnostic situations. One particular application of KS to diagnostics is in the identification of poisonous fungi, which we explore in this work. 
+Due to the wide variety of human ailments and the limited capacity of human medical expertise, artificial intelligence knowledge systems (KS) are increasingly finding use in real diagnostic situations.~\cite{expert-systems-in-diagnosis}
+One particular application of KS to diagnostics is in the identification of poisonous fungi, which we explore in this work. 
+
+
 
 Some stuff goes here ~\cite{russell-norvig-aima} ~\cite{python-doc} ~\cite{sympy-doc}
 
@@ -22,9 +25,31 @@ Some stuff goes here ~\cite{russell-norvig-aima} ~\cite{python-doc} ~\cite{sympy
 
 \section{Knowledge Base}
 
+
 \section{Implementation}
+We chose to implement the knowledge system as a command-line tool written primarily in Python~\cite{python-doc} for two primary reasons. 
+The first is that as Python is a dynamic, interpreted language with a sufficiently powerful standard library. As a consequence, it was possible to get a prototype working within a week of development and from there onward it was possible to rapidly iterate upon and test the design. 
+The second is that Python has a rich ecosystem of open source third-party modules. Among them, the SymPy symbolic logic module~\cite{sympy-doc} was instrumental to our implementation. Our knowledge system makes extensive use of the types provided by SymPy and the module's ability to efficiently convert sentences in propositional logic to conjunctive normal form (CNF).
+
+\subsection{Establishing the Knowledge Base}
+The knowledge system operates by first ingesting a file containing \emph{rules} which it internally represents as SymPy inferences. 
+Then, it offers two methods for determining a set of \emph{facts}. 
+Either the user can provide a file containing those facts which can be parsed similarly to the rule file, or the user can invoke the interactive mode of the knowledge system which prompts them with questions about the ingested mushroom and the symptoms of the patient. 
+
+Once a list of rules and a list of facts are established, the system concatenates them, formats their contents as necessary for agreement with SymPy's API. 
+The list can now be converted into a conjunction of SymPy symbols using the \emph{sympify} function, then converted to CNF using the \emph{to\_cnf} function. 
+Once a CNF representation of the knowledge base is generated, the user is prompted to enter a query, which is subsequently formatted and sympy-fied. The result is a pair of inputs that can be operated upon by any of the implemented inference algorithms to determine entailment of the query. 
+
+\subsection{Inference Algorithms}
+We implement three inference algorithms in this knowledge system: resolution, forward chaining, and backward chaining. Our implementations of resolution and forward chaining are based upon the pseudocode in Russell and Norvig~\cite{russell-norvig-aima}, while our implementation of backward chaining is based primarily on the notes and slides provided in class. 
+
+
 
 \section{Evaluation}
+
+\subsection{Correctness}
+
+\subsection{Performance}
 
 
 \bibliographystyle{IEEEtran}
