@@ -7,7 +7,7 @@ lower abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver f
 # Encephalopathy rule
 disorientation & myoclonus & seizures ==> encephalopathy
 # Kidney failure rule
-immense thirst & frequent urination & lower abdominal pain ==> kidney failurehttps://docs.google.com/document/u/2/?authuser=2&usp=docs_web
+immense thirst & frequent urination & lower abdominal pain ==> kidney failure
 # Respiratory failure rule
 blue skin & tachycardia & shortness of breathe ==> respiratory failure
 # Cardiac failure rule
