@@ -69,7 +69,7 @@ def resolution(kb, q):
 
         ### Check if new is a subset of clauses
         num_new_clauses = len(new)
-        #print "Number of new clauses: " + str(num_new_clauses)
+        print "Number of new clauses: " + str(num_new_clauses)
         for c in new:
             if c in clauses:
                 num_new_clauses -= 1
@@ -81,7 +81,7 @@ def resolution(kb, q):
         clauses = list(set(clauses + new))
 
         num_iter += 1
-        #print num_iter
+        print num_iter
 
 
 def forward_chaining(kb, q):
@@ -151,6 +151,36 @@ def forward_chaining(kb, q):
     return False
 
 
+
+def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q):
+    ### First check if query is a known true symbol
+    if q in known_true_symbols:
+        return True
+    ### Otherwise, check if there is a conclusion matching q
+    ### If not, fail immediately.
+    else:
+        if q not in conclusions.values():
+            return False
+        ### There is at least one implication with q as its conclusion
+        ### Now we need to recurse on those implications' premises
+        else:
+            candidate_conclusions = []
+            for c in clauses:
+                if conclusions[c] == q:
+                    pending_premises = premises[c]
+                    target = len(pending_premises)
+                    for p in pending_premises:
+                        t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p)
+                        if t == True:
+                            target = target - 1
+
+                    if target == 0:
+                        return True
+                    else:
+                        return False
+
+
+
 def backward_chaining(kb, q):
     clauses = list(kb.args)
 
@@ -159,6 +189,7 @@ def backward_chaining(kb, q):
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
+
 
     ### Construct tables of premises and conclusions keyed by clauses
     premises = {}
@@ -178,39 +209,48 @@ def backward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
-    ### Backward chaining algorithm
-    candidates = []
-    for c in clauses:
-        if conclusions[c] == q:
-            ### Check if premises are in kb
-            candidate_premises = list(premises[c])
+    return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
 
-            #print "Candidate premises: " + str(candidate_premises)
-            #print "Known true symbols: " + str(known_true_symbols)
-
-            m = len(candidate_premises)
-            n = 0
-
-            for p in candidate_premises:
-                if p in known_true_symbols:
-
-                    #print p
-
-                    n += 1
-
-            if m == n:
-                return True
-            else:
-                candidates.append(c)
-
-    #print "Candidates:"
-    #print candidates
-
-    for c in candidates:
-        #print "Premises of " + str(c)
-        for p in premises[c]:
-            #print p
-            return backward_chaining(kb, p)
-
-    return False
-
+#    ### Backward chaining algorithm
+#    candidates = []
+#    for c in clauses:
+#        if conclusions[c] == q:
+#            ### Check if premises are in kb
+#            candidate_premises = list(premises[c])
+#
+#            print "Candidate premises: " + str(candidate_premises)
+#            print "Known true symbols: " + str(known_true_symbols)
+#
+#            m = len(candidate_premises)
+#            n = 0
+#
+#            for p in candidate_premises:
+#                if p in known_true_symbols:
+#
+#                    print p
+#
+#                    n += 1
+#
+#            if m == n:
+#                return True
+#            else:
+#                candidates.append(c)
+#
+#    print "Candidates:"
+#    print candidates
+#
+#    #num_premises = 0
+#    for c in candidates:
+#        print "Premises of " + str(c)
+#        target = len(premises[c])
+#        num_premises = 0
+#        for p in premises[c]:
+#            print p
+#            result = backward_chaining(kb, p)
+#            if result == True:
+#                num_premises = num_premises + 1
+#    
+#        if num_premises == target:
+#            return True
+#    
+#    return False

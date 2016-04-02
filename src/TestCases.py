@@ -24,16 +24,13 @@ def TEST_resolve():
 def TEST_resolution(kb, q):
     x = resolution(kb,q)
     print x
-    print type(x)
 
 def TEST_forward_chaining(kb, q):
     x = forward_chaining(kb, q)
     print x
-    print type(x)
 
 def TEST_backward_chaining(kb, q):
     x = backward_chaining(kb, q)
     print x
-    print type(x)
 
 

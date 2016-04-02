@@ -154,36 +154,39 @@ def run_inference_test_suite():
     #kb_rules = ["(A & B) >> L", "(A & P) >> L", "(B & L) >> M", "(L & M) >> P"]
     #kb_rules = ["(A & B) >> L", "(A & P) >> L"]
     
-    kb_facts = ["labored_breathing", "liver_failure", "~C"]
-    kb_rules = ["(labored_breathing & liver_failure) >> L", "(labored_breathing & P) >> L", "(liver_failure & L) >> M", "(L & M) >> P", "P >> Z"]
+    #kb_facts = ["labored_breathing", "liver_failure", "~C"]
+    #kb_rules = ["(labored_breathing & liver_failure) >> L", "(labored_breathing & P) >> L", "(liver_failure & L) >> M", "(L & M) >> P", "P >> Z"]
 
     ### String representation of the query
-    kb_query = ["Z"]
+    #kb_query = ["Z"]
 
     ### First we convert the KB and the query into types that SymPy can work on
-    kb_facts = [sp.sympify(f) for f in kb_facts]
-    kb_rules = [sp.sympify(r) for r in kb_rules]
-    kb_query = [sp.sympify(q) for q in kb_query] 
+   # kb_facts = [sp.sympify(f) for f in kb_facts]
+   # kb_rules = [sp.sympify(r) for r in kb_rules]
+   # kb_query = [sp.sympify(q) for q in kb_query] 
 
-    ### For the resolution algorithm, the inputs are:
-    ### KB - A CNF sentence representing the entire knowledge base
-    ### Q  - A CNF sentence representing the query
-    ### Note that the conjunction of KB and ~Q is itself a CNF sentence.
-    kb = kb_facts + kb_rules # This just concatenates the lists
-    kb_sentence  = kb[0]
-    for k in kb[1:]: # At end of this loop, everything in the KB is conjoined
-        kb_sentence = kb_sentence & k
-    kb_cnf_sentence = sp.to_cnf(kb_sentence) # And now the sentence is in CNF
+   # ### For the resolution algorithm, the inputs are:
+   # ### KB - A CNF sentence representing the entire knowledge base
+   # ### Q  - A CNF sentence representing the query
+   # ### Note that the conjunction of KB and ~Q is itself a CNF sentence.
+   # kb = kb_facts + kb_rules # This just concatenates the lists
+   # kb_sentence  = kb[0]
+   # for k in kb[1:]: # At end of this loop, everything in the KB is conjoined
+   #     kb_sentence = kb_sentence & k
+   # kb_cnf_sentence = sp.to_cnf(kb_sentence) # And now the sentence is in CNF
+
+    kb = build_knowledge_base("../test/mushroom_rules.txt", "../test/mushroom_facts.txt")
+    q  = sp.sympify(custom_replace("liver failure"))
 
     ### Print test results
-    print "Testing resolve:" 
-    TEST_resolve()
-    print "Testing resolution:"
-    TEST_resolution(kb_cnf_sentence, kb_query[0])
+    #print "Testing resolve:" 
+    #TEST_resolve()
+    #print "Testing resolution:"
+    #TEST_resolution(kb, q)
     print "Testing forward chaining:"
-    TEST_forward_chaining(kb_cnf_sentence, kb_query[0])
+    TEST_forward_chaining(kb, q)
     print "Testing backward chaining:"
-    TEST_backward_chaining(kb_cnf_sentence, kb_query[0])
+    TEST_backward_chaining(kb, q)
 
 
 def main():
@@ -194,46 +197,45 @@ def main():
 
     ### Determine whether to run the knowledge system in file or interactive mode
     ### and generate the knowledge base.
-    rule_file_name = sys.argv[1]
-    mode = sys.argv[2]
-    ### Interactive mode
-    if mode == "interactive":
-        kb = build_knowledge_base_interactive(rule_file_name)
-    ### File mode
-    else:
-        fact_file_name = sys.argv[3]
-        kb = build_knowledge_base(rule_file_name, fact_file_name)
-        
-    ### Prompt the user to enter queries
-    print "You will be prompted to enter queries. If you wish to exit, type \"exit\"."
-    while True:
-        query = raw_input("Enter your query: ")
-        if query == "exit":
-            exit()
-        else:
-            query = sp.sympify(custom_replace(query))
-            algorithm = raw_input("Enter which inference algorithm you want to use: ")
-            if algorithm == "resolution":
-                truth_value = resolution(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            elif algorithm == "forward chaining":
-                truth_value = forward_chaining(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            elif algorithm == "backward chaining":
-                truth_value = backward_chaining(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            else:
-                print "Unsupported algorithm specified."
-
+#    rule_file_name = sys.argv[1]
+#    mode = sys.argv[2]
+#    ### Interactive mode
+#    if mode == "interactive":
+#        kb = build_knowledge_base_interactive(rule_file_name)
+#    ### File mode
+#    else:
+#        fact_file_name = sys.argv[3]
+#        kb = build_knowledge_base(rule_file_name, fact_file_name)
+#        
+#    ### Prompt the user to enter queries
+#    print "You will be prompted to enter queries. If you wish to exit, type \"exit\"."
+#    while True:
+#        query = raw_input("Enter your query: ")
+#        if query == "exit":
+#            exit()
+#        else:
+#            query = sp.sympify(custom_replace(query))
+#            algorithm = raw_input("Enter which inference algorithm you want to use: ")
+#            if algorithm == "resolution":
+#                truth_value = resolution(kb, query)
+#                if truth_value == True:
+#                    print "Query is entailed by knowledge base."
+#                else:
+#                    print "Query is not entailed by knowledge base."
+#            elif algorithm == "forward chaining":
+#                truth_value = forward_chaining(kb, query)
+#                if truth_value == True:
+#                    print "Query is entailed by knowledge base."
+#                else:
+#                    print "Query is not entailed by knowledge base."
+#            elif algorithm == "backward chaining":
+#                truth_value = backward_chaining(kb, query)
+#                if truth_value == True:
+#                    print "Query is entailed by knowledge base."
+#                else:
+#                    print "Query is not entailed by knowledge base."
+#            else:
+#                print "Unsupported algorithm specified."
 
         
     
@@ -252,7 +254,7 @@ def main():
 #    kb_interactive = build_knowledge_base_interactive(rule_file_name)
 #    print kb_interactive
 #
-#    print "TESTING INFERENCE ALGORITHMS"
-#    run_inference_test_suite()
+    print "TESTING INFERENCE ALGORITHMS"
+    run_inference_test_suite()
 
 main()

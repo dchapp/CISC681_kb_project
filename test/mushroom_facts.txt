@@ -1,8 +1,6 @@
-gills is white
-cap shape is convex
-stem texture is scaly
-odor is mild
-location is egypt
+white gills
 nausea
 vomiting
 disorientation
+lower abdominal pain
+#yellow skin or eyes
