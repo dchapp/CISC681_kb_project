@@ -209,6 +209,13 @@ def backward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
+    print clauses
+    print known_true_symbols
+    print premises
+    print conclusions
+    print q
+    exit()
+
     return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
 
 #    ### Backward chaining algorithm
@@ -256,7 +263,9 @@ def backward_chaining(kb, q):
 #    return False
 
 
-
+"""
+Driver function for DPLL inference
+"""
 def dpll_satisfiable(kb, q):
     sentence = kb & ~q
     clauses = list(sentence.args)
@@ -275,9 +284,56 @@ def dpll_satisfiable(kb, q):
     return dpll(clauses, symbols, model)
 
 
+"""
+Worker function for DPLL inference
+"""
 def dpll(clauses, symbols, model):
     ### Determine if there is a clause that is false in the model
     return False
 
+
+def clause_is_true_in_model(clause, model):
+    print "WOO"
+    return True
+
+"""
+Determines if the symbol appears with the same sign in all clauses.
+"""
+def symbol_is_pure(symbol, clauses):
+    ### Get the instances of the symbol 
+
+    print symbol
+    print clauses
+
+    instances = []
+    for c in clauses:
+        if type(c) == sp.Or:
+            symbols_in_clause = list(c.args)
+            for s in symbols_in_clause:
+                if s == symbol or sp.Not(s) == symbol:
+                    instances.append(s)
+        else:
+            if c == symbol or sp.Not(c) == symbol:
+                instances.append(c)
+
+    print instances
+
+    ### Determine if symbol appears with same sign everywhere
+    instances = set(instances)
+
+    print instances
+
+    if len(instances) == 1:
+        return True
+    else:
+        return False
+
+"""
+Determines if the clause is a unit clause. 
+A clause is a unit clause if it consists of a single symbol OR
+if all symbols in the clause are already assigned false by the model.
+"""
+def clause_is_unit(clause, model):
+    return False
 
 
