@@ -5,10 +5,34 @@ yellow skin or eyes ==> jaundice
 # Liver failure rule
 lower abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver failure
 # Encephalopathy rule
-altered mental state & myoclonus & seizures ==> encephalopathy
+disorientation & myoclonus & seizures ==> encephalopathy
 # Kidney failure rule
 immense thirst & frequent urination & lower abdominal pain ==> kidney failure
-
-
-
-
+# Respiratory failure rule
+blue skin & racing heart & inability to breathe & shortness of breathe ==> respiratory failure
+# Cardiac failure rule
+swelling in lower body & fatigue & rapid, irregular heartbeat & shortness of breathe ==> cardiac failure
+# Hypoglycemia rule
+blood sugar level under 70 mg/dl ==> hypoglycemia
+# Acidosis rule
+juandice & headache & blood pH < 7.35 ==> acidosis
+# Diarrhea rule
+loose watery stool & rectal pain & black, tarry stool ==> diarrhea
+# Dehydration rule
+dark colored urine & infrequent urination & dry skin muscle cramps ==> dehydration
+# Intracranial hemorrhage rule
+headache & trouble swallowing & loss of vision & loss of balance & muscular weakness ==> intracranial hemorrhage
+# Amanita Genus rule
+white spore print & unattached gills & white gills & white stem ==> genus is amanita
+# Amanita Sphaerobulbosa location rule
+genus is amanita & location is japan ==> species is amanita sphaerobulbosa
+# Amanita Exitialis Location rule
+genus is amanita & location is guangdong province China ==> species is amanita exitialis
+# Cortinarius Genus rule
+brown spore print & cobweb-like covering on gills & growing on/around trees ==> genus is cortinarius
+# Galerina Genus rule
+yellow-orange spore print & growing on felled logs => genus is galerina
+# Gyromitra Genus rule
+cap is irregular & cap is reddish & 
+# Lepiota Genus rule
+cap is scaled & smell is rubbery & white spore print ==> genus is lepiota
