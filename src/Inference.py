@@ -50,6 +50,23 @@ def resolution(kb, q):
 
     num_iter = 0
 
+    ### Check to make sure that q can actually be entailed
+    ### Auxiliary tables of premises and conclusions
+    conclusions = {}
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            conclusions[c] = None
+        else:
+            symbols_in_clause = c.args
+            for s in symbols_in_clause:
+                if type(s) != sp.Not:
+                    conclusion = s
+            conclusions[c] = conclusion
+
+    if q not in conclusions.values():
+        return False
+    
+
     while True:
         for i in clauses:
             for j in clauses:
