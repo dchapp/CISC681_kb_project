@@ -15,7 +15,7 @@ def custom_replace(s):
     s = s.replace("/", "or")
     s = s.replace(".", "_point_")
     s = s.replace(",", "")
-    s = s.repalce(";", "")
+    s = s.replace(";", "")
     s = s.replace(":", "")
     s = s.replace(" ", "_")
     return s
