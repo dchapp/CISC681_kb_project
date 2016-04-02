@@ -109,7 +109,7 @@ def build_knowledge_base_interactive(rule_file_name):
                 continue
         else:
             response = raw_input("What is the mushroom's " + p + "? ")
-            if response == "?":
+            if response == "?" or "\n":
                 continue
             else:
                 fact = p + " is " + response
