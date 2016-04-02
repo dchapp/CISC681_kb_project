@@ -13,5 +13,6 @@ def custom_replace(s):
     s = s.replace("+", "plus")
     s = s.replace("*", "times")
     s = s.replace("/", "divided by")
+    s = s.replace(".", ",")
     s = s.replace(" ", "_")
     return s
