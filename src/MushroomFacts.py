@@ -22,7 +22,7 @@ def define_properties():
                           "lower abdominal pain",
                           "nausea",
                           "vomiting",
-                          "disorientation/confusion",
+                          "disorientation",
                           "seizures",
                           "myoclonus",
                           "immense thirst",

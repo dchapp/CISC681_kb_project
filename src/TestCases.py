@@ -22,12 +22,18 @@ def TEST_resolve():
     print resolve(clause_i, clause_j)
 
 def TEST_resolution(kb, q):
-    print resolution(kb,q)
+    x = resolution(kb,q)
+    print x
+    print type(x)
 
 def TEST_forward_chaining(kb, q):
-    print forward_chaining(kb, q)
+    x = forward_chaining(kb, q)
+    print x
+    print type(x)
 
 def TEST_backward_chaining(kb, q):
-    print backward_chaining(kb, q)
+    x = backward_chaining(kb, q)
+    print x
+    print type(x)
 
 

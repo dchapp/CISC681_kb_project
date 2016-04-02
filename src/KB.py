@@ -188,30 +188,71 @@ def run_inference_test_suite():
 
 def main():
     #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
-    #parser.add_argument("input", nargs=1, help="File describing mushroom or symptoms")
-    #parser.add_argument("-m", "--mode", nargs=1, default=[], help="How to process your query.")
+    #parser.add_argument("rule file", nargs=1, help="File listing rules.")
+    #parser.add_argument("-m", "--mode", nargs=1, default=0, help="Determines whether to establish facts with a file (-m 0) or interactively (-m 1).")
     #args = parser.parse_args()
 
-
+    ### Determine whether to run the knowledge system in file or interactive mode
+    ### and generate the knowledge base.
     rule_file_name = sys.argv[1]
-    fact_file_name = sys.argv[2]
+    mode = sys.argv[2]
+    ### Interactive mode
+    if mode == "interactive":
+        kb = build_knowledge_base_interactive(rule_file_name)
+    ### File mode
+    else:
+        fact_file_name = sys.argv[3]
+        kb = build_knowledge_base(rule_file_name, fact_file_name)
+        
+    ### Prompt the user to enter queries
+    print "You will be prompted to enter queries. If you wish to exit, type \"exit\"."
+    while True:
+        query = raw_input("Enter your query: ")
+        if query == "exit":
+            exit()
+        else:
+            query = sp.sympify(custom_replace(query))
+            algorithm = raw_input("Enter which inference algorithm you want to use: ")
+            if algorithm == "resolution":
+                truth_value = resolution(kb, query)
+                if truth_value == True:
+                    print "Query is entailed by knowledge base."
+                else:
+                    print "Query is not entailed by knowledge base."
+            elif algorithm == "forward chaining":
+                truth_value = forward_chaining(kb, query)
+                if truth_value == True:
+                    print "Query is entailed by knowledge base."
+                else:
+                    print "Query is not entailed by knowledge base."
+            elif algorithm == "backward chaining":
+                truth_value = backward_chaining(kb, query)
+                if truth_value == True:
+                    print "Query is entailed by knowledge base."
+                else:
+                    print "Query is not entailed by knowledge base."
+            else:
+                print "Unsupported algorithm specified."
 
-    rules = parse_rule_file(rule_file_name)
-    facts_from_file = parse_fact_file(fact_file_name)
-    print "RULES:"
-    print rules
-    print "FACTS:"
-    print facts_from_file
 
-    print "TESTING KB BUILDER"
-    kb_from_file = build_knowledge_base(rule_file_name, fact_file_name)
-    print kb_from_file
-
-    print "TESTING INTERACTIVE KB BUILDER"
-    kb_interactive = build_knowledge_base_interactive(rule_file_name)
-    print kb_interactive
-
-    print "TESTING INFERENCE ALGORITHMS"
-    run_inference_test_suite()
+        
+    
+#    rules = parse_rule_file(rule_file_name)
+#    facts_from_file = parse_fact_file(fact_file_name)
+#    print "RULES:"
+#    print rules
+#    print "FACTS:"
+#    print facts_from_file
+#
+#    print "TESTING KB BUILDER"
+#    kb_from_file = build_knowledge_base(rule_file_name, fact_file_name)
+#    print kb_from_file
+#
+#    print "TESTING INTERACTIVE KB BUILDER"
+#    kb_interactive = build_knowledge_base_interactive(rule_file_name)
+#    print kb_interactive
+#
+#    print "TESTING INFERENCE ALGORITHMS"
+#    run_inference_test_suite()
 
 main()
