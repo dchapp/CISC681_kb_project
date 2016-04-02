@@ -210,11 +210,11 @@ def backward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
-    print clauses
-    print known_true_symbols
-    print premises
-    print conclusions
-    print q
+#    print clauses
+ #   print known_true_symbols
+  #  print premises
+   # print conclusions
+    #print q
 
     return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
 

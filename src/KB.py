@@ -185,8 +185,11 @@ def run_inference_test_suite(query):
     #TEST_resolve()
     print "Testing forward chaining:"
     TEST_forward_chaining(kb, q)
-    print "Testing backward chaining:"
+    print "Testing recursive backward chaining:"
     TEST_backward_chaining(kb, q)
+    print "Testing iterative backward chaining:"
+    print iterative_backward_chaining(kb, q)
+    
    # print "Testing resolution:"
    # TEST_resolution(kb, q)
 
