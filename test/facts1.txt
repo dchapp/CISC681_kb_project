@@ -1,0 +1,18 @@
+#white gills
+#nausea
+#vomiting
+#disorientation
+#lower abdominal pain
+#yellow skin or eyes
+
+a
+b
+c
+#d
+#e
+#f
+#h
+#i
+#j
+k
+#l

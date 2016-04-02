@@ -1,0 +1,18 @@
+## Tachycardia rule
+#heart rate > 100 ==> tachycardia
+## Jaundice rule
+#yellow skin or eyes ==> jaundice
+## Liver failure rule
+#lower abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver failure
+## Encephalopathy rule
+#altered mental state & myoclonus & seizures ==> encephalopathy
+## Kidney failure rule
+#immense thirst & frequent urination & lower abdominal pain ==> kidney failure
+
+a ==> o
+b & c ==> e
+d & a ==> f
+f & e ==> z
+a & b & c & d ==> g
+g & z ==> o
+a & e & k ==> l
