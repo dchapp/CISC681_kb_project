@@ -21,7 +21,7 @@ loose watery stool & rectal pain ==> diarrhea
 # Intracranial hemorrhage rule
 headache & trouble swallowing & loss of vision & loss of balance & fatigue ==> intracranial hemorrhage
 # Circulatory shock rule
-hypotension & disorientation & tachycardia & cardiac failure ==> circulatroy shock
+hypotension & disorientation & tachycardia & cardiac failure ==> circulatory shock
 # Amanita Genus rule
 spore print color is white & gill type is unattached & gill color is white & stem color is white ==> genus is amanita
 # Amanita Sphaerobulbosa location rule
@@ -125,11 +125,16 @@ juandice & diarrhea & vomiting & coma & vertigo & liver failure & kidney failure
 # Lepiota
 #Amatoxin
 # Pholiotina
-#Amatoxin
+#Amatoxin poisoning rule
+liver failure & kidney failure & back pain & insomnia & coughing ==> amatoxin poisoning
 # Pleurocybella
-#Pleurocybellaziridine
+pleurocybellaziridine poisoning ==> genus is pleurocybella
+#Pleurocybellaziridine poisoning rule
+encephalopathy ==> pleurocybellaziridine poisoning
 # Podostroma
-#
+trichothocene poisoning ==> genus is podostroma
+#Trichothecene poisoning rule
+stomach pain & peeling skin on the face & shrinking of the cerebellum ==> trichothocene poisoning
 # Trogia
 yunnan sudden death syndrome ==> genus is trogia
 #Yunnan sudden death syndrom
