@@ -1,0 +1,4 @@
+*/*.pyc
+test/facts1.txt
+test/rules1.txt
+src/py
