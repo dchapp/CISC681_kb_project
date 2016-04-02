@@ -366,6 +366,15 @@ def iterative_backward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
+    ### Check if query is a known true symbol
+    if q in known_true_symbols:
+        return True
+
+    ### Check if query can possibly be entailed
+    if q not in conclusions.values():
+        return False
+
+
     ### Determine the clauses that can entail the query
     candidates = []
     for c in clauses:
