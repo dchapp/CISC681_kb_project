@@ -12,7 +12,10 @@ def custom_replace(s):
     s = s.replace("&", "and")
     s = s.replace("+", "plus")
     s = s.replace("*", "times")
-    s = s.replace("/", "divided by")
-    s = s.replace(".", ",")
+    s = s.replace("/", "or")
+    s = s.replace(".", "_point_")
+    s = s.replace(",", "")
+    s = s.repalce(";", "")
+    s = s.replace(":", "")
     s = s.replace(" ", "_")
     return s
