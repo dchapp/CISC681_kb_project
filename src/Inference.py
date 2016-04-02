@@ -254,3 +254,30 @@ def backward_chaining(kb, q):
 #            return True
 #    
 #    return False
+
+
+
+def dpll_satisfiable(kb, q):
+    sentence = kb & ~q
+    clauses = list(sentence.args)
+    symbols = []
+    for c in clauses:
+        args = list(c.args)
+        new_symbols = []
+        for a in args:
+            if type(a) == sp.Symbol:
+                new_symbols.append(a)
+            else:
+                new_symbols.append(sp.Not(a))
+        symbols = symbols + new_symbols
+    symbols = list(set(symbols))
+    model = []
+    return dpll(clauses, symbols, model)
+
+
+def dpll(clauses, symbols, model):
+    ### Determine if there is a clause that is false in the model
+    return False
+
+
+
