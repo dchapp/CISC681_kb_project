@@ -386,10 +386,13 @@ def iterative_backward_chaining(kb, q):
         things_to_prove = list(premises[c])
         under_consideration = []
         while things_to_prove:
+            #print "pre-pop: " + str(things_to_prove)
             t = things_to_prove.pop()
+            #print "post-pop: " + str(things_to_prove)
             ### If known to be true, do nothing
             if t in known_true_symbols:
-                continue
+                #print str(t) + " is a known true symbol"
+                pass
             ### Can it proved by anything?
             elif t not in conclusions.values():
                 continue
@@ -406,8 +409,10 @@ def iterative_backward_chaining(kb, q):
                             known_true_symbols.append(t)
                         else:
                             things_to_prove + things_that_prove_t
-
-            if not things_to_prove:
+            
+            #print "Before empty check: " + str(things_to_prove)
+            if len(things_to_prove) == 0:
                 return True
-
+    
+    #print "I got to here"
     return False
