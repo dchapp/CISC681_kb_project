@@ -7,32 +7,130 @@ lower abdominal pain & nausea & vomiting & disorientation & jaundice ==> liver f
 # Encephalopathy rule
 disorientation & myoclonus & seizures ==> encephalopathy
 # Kidney failure rule
-immense thirst & frequent urination & lower abdominal pain ==> kidney failure
+immense thirst & frequent urination & lower abdominal pain ==> kidney failurehttps://docs.google.com/document/u/2/?authuser=2&usp=docs_web
 # Respiratory failure rule
-blue skin & racing heart & inability to breathe & shortness of breathe ==> respiratory failure
+blue skin & tachycardia & shortness of breathe ==> respiratory failure
 # Cardiac failure rule
-swelling in lower body & fatigue & rapid, irregular heartbeat & shortness of breathe ==> cardiac failure
+swelling in lower body & fatigue & tachycardia & shortness of breathe ==> cardiac failure
 # Hypoglycemia rule
-blood sugar level under 70 mg/dl ==> hypoglycemia
+blood sugar level below 70 mg/dl ==> hypoglycemia
 # Acidosis rule
 juandice & headache & blood pH < 7.35 ==> acidosis
 # Diarrhea rule
-loose watery stool & rectal pain & black, tarry stool ==> diarrhea
-# Dehydration rule
-dark colored urine & infrequent urination & dry skin muscle cramps ==> dehydration
+loose watery stool & rectal pain ==> diarrhea
 # Intracranial hemorrhage rule
-headache & trouble swallowing & loss of vision & loss of balance & muscular weakness ==> intracranial hemorrhage
+headache & trouble swallowing & loss of vision & loss of balance & fatigue ==> intracranial hemorrhage
+# Circulatory shock rule
+hypotension & disorientation & tachycardia & cardiac failure ==> circulatroy shock
 # Amanita Genus rule
-white spore print & unattached gills & white gills & white stem ==> genus is amanita
+spore print color is white & gill type is unattached & gill color is white & stem color is white ==> genus is amanita
 # Amanita Sphaerobulbosa location rule
 genus is amanita & location is japan ==> species is amanita sphaerobulbosa
 # Amanita Exitialis Location rule
 genus is amanita & location is guangdong province China ==> species is amanita exitialis
+# Amanita arocheae rule
+genus is amanita & cap color is gray & cap texture is sticky ==> species is arocheae
+# Amanita bisporigera rule
+genus is amanita & cap color is white with cream spot & cap texture is dry ==> species is bisporigera
+# Amanita magnivelaris rule
+genus is amanita & stem has ring & stem has volva & location is New York ==> species is magnivelaris
+# Amanita ocreata rule
+genus is amanita & odor is bleach & season is spring ==> species is ocreata
+# Amanita phalloides rule
+genus is amanita & cap color is yellow & cap texture is sticky & odor is sweet ==> species is phalloides
+# Amanita smithiana rule
+genus is amanita & cap texture is scaled & stem texture is scaled & host organism is soil ==> species is smithiana
+# Amanita subjunquillea rule
+genus is amanita & stem has ring & stem has volva & location is asia ==> species is subjunquillea
+# Amanita verna rule
+genus is amanita & season is spring & location is europe ==> species is verna
+# Amanita virosa rule
+genus is amanita & gill type is on hymenium & odor is radish ==> species is virosa
+# Clitocybe Genus rule
+cap shape is depressed & hymenium is adnate ==> genus is clitocybe
+# Clitocybe dealbata rule
+genus is clitocybe & cap color is white ==> species is dealbata
+# Clitocybe rivulosa rule
+genus is clitocybe & cap color is white with pink ==> species is rivulosa
 # Cortinarius Genus rule
-brown spore print & cobweb-like covering on gills & growing on/around trees ==> genus is cortinarius
+spore print color is brown & gill type is cobweb cover & host organism is trees ==> genus is cortinarius
+#Cortinarius gentilis rule
+genus is cortinarius & cap shape is convex ==> species is gentillis
+#Cortinarius orellanus rule
+genus is cortinarius & cap shape is concave ==> species is orellanus
+#Cortinarius rubellus rule
+genus is cortinarius & cap shape is umbonate ==> species is rubellus
+#Cortinarius splendens rule
+genus is cortinarius & host organism is European beech ==> species is splendens
 # Galerina Genus rule
-yellow-orange spore print & growing on felled logs => genus is galerina
+spore print color is yellow-orange & host organism is felled logs ==> genus is galerina
+#Galerina marginata rule
+genus is galerina & gill color is brown & hymenium is adnexed & odor is flour ==> species is marginata
+#Galerina sulciceps rule
+genus is galerina & hymenium is adnate & cap shape is flat ==> species is sulciceps
 # Gyromitra Genus rule
-cap is irregular & cap is reddish & 
+cap shape is irregular & cap texture is smooth & cap color is red ==> genus is gyromitra
+# Gyromitra esculenta rule
+genus is gyromitra & hymenium is smooth & stem color is yellow ==> species is esculenta
 # Lepiota Genus rule
-cap is scaled & smell is rubbery & white spore print ==> genus is lepiota
+cap texture is scaled & odor is rubbery & spore print color is white ==> genus is lepiota
+#Lepiota brunneoincarnata rule
+genus is lepiota & cap shape is campanulate ==> species is brunneoincarnata
+#Lepiota castanea rule
+genus is lepiota & cap color is red & gill color is white ==> species is castanea
+#Lepiota helveola rule
+genus is lepiota & gill color is white & gill type is on hymenium ==> species is helveola
+#Lepiota subincarnata rule
+genus is lepiota & cap color is pink ==> species is subincarnata
+# Inocybe Genus rule
+spore print color is brown & cap shape is conical & cap texture is fibrous ==> genus is inocybe
+# Inocybe erubescens rule
+genus is inocybe & odor is musty & gill type is on hymenium ==> species is erubescens
+# Pholiotina Genus rule
+spore print color is brown & cap color is brown & stem color is brown ==> genus is pholiotina
+# Pholiotina rugosa rule
+genus is pholiotina & gill type is adnexed ==> species is rugosa
+# Pleurocybella Genus rule
+cap color is white & cap texture is fragile ==> genus is pleurocybella
+# Pleurocybella porrigens rule
+genus is pleurocybella & climate is temperate forests ==> species is porrigens
+# Podostroma Genus rule
+cap shape is irregular & cap color is red & spore print color is yellow ==> genus is podostroma
+# Podostroma cornu-damae rule
+genus is podostroma & location is japan ==> species is cornu-damae
+# Trogia Genus rule
+cap shape is irregular & host orgnanism is rotting wood & gill type is attached & climate is subtropical ==> genus is trogia
+#Trogia venenata rule
+genus is trogia and cap color is white & cap texture is smooth ==> species is venenata
+# Amanita
+#alpha amanitin poisoning ==> genus is amanita
+# Alpha Amanitin poisoning rule
+diarrhea & liver failure & kidney failure & respiratory failure ==> alpha amanitin poisoning
+# Clitocybe
+#muscarine poisoning ==> genus is clitocybe
+# Muscarine poisoning rule
+miosis & lacrimation & circulatory shock ==> muscarine poisoning
+# Cortinarius 
+orellanine poisoning ==> genus is cortinarius
+# Orellanine poisoning rule
+headache & myalgia & nausea & kidney failure ==> orellanine poisoning
+# Galerina 
+#alpha amanitin poisoning ==> genus is galerina
+# Gyromitra
+gyromitrin poisoning ==> genus is gyromitra
+# Gyromitrin poisoning rule
+juandice & diarrhea & vomiting & coma & vertigo & liver failure & kidney failure & seizures ==> gyromitrin poisoning
+# Inocybe
+#muscarine poisoning ==> genus is inocybe
+# Lepiota
+#Amatoxin
+# Pholiotina
+#Amatoxin
+# Pleurocybella
+#Pleurocybellaziridine
+# Podostroma
+#
+# Trogia
+yunnan sudden death syndrome ==> genus is trogia
+#Yunnan sudden death syndrom
+in yunnan china & nausea & dizziness & heart palpitations & seizures & fatigue ==> yunnan sudden death syndrome

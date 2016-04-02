@@ -14,10 +14,13 @@ def define_properties():
                            "location",
                            "climate",
                            "season",
-                           "host organism"]
+                           "host organism",
+						   "genus",
+						   "species"]
 
     patient_properties = ["heart rate > 100",
                           "yellow skin or eyes",
+						  "blue skin",
                           "upper abdominal pain",
                           "lower abdominal pain",
                           "nausea",
@@ -33,7 +36,26 @@ def define_properties():
                           "diarrhea",
                           "bloody diarrhea",
                           "vertigo",
-                          "burning sensation in limbs"]
+                          "burning sensation in limbs",
+						  "shortness of breathe",
+						  "swelling in lower body",
+						  "fatigue",
+						  "blood sugar level below 70 mg/dl",
+						  "blood pH < 7.35",
+						  "loose watery stool",
+						  "rectal pain",
+						  "trouble swallowing",
+						  "loss of vision",
+						  "loss of balance",
+						  "hypotension",
+						  "miosis",
+						  "lacrimation",
+						  "myalgia",
+						  "coma",
+						  "in yunnan china",
+						  "dizziness"
+						  "heart palpitations",
+						  ]
 
     return (mushroom_properties, patient_properties)
 
