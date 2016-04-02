@@ -1,4 +1,5 @@
 a ==> o
+b ==> z
 b & c ==> e
 d & a ==> f
 f & e ==> z
@@ -10,3 +11,5 @@ t & a & b & f & r ==> i
 h & g ==> r
 b & z ==> h
 m & d ==> g
+o & z ==> r
+r & f & d ==> c
