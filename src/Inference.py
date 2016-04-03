@@ -106,7 +106,6 @@ def resolution(kb, q):
 def forward_chaining(kb, q):
     ### Extract all unique symbols from the kb
     clauses = list(kb.args)
-    # print clauses
     symbols = []
 
     for c in clauses:
@@ -116,8 +115,6 @@ def forward_chaining(kb, q):
             symbols_in_clause = c.args
             for s in symbols_in_clause:
                 symbols.append(s)
-    # print "\n"
-    # print symbols
     ### Construct agenda queue
     ### Initially the symbols known to be true in the kb
     agenda = []
@@ -129,6 +126,8 @@ def forward_chaining(kb, q):
     ### Initially false for all symbols 
     inferred = dict((k,False) for k in symbols)
 
+    # print "\n" + "inferred: "
+    # print inferred.keys()
     ### Construct count table
     ### Where count[c] = number of symbols in c's premise
     counts = {}
@@ -158,17 +157,35 @@ def forward_chaining(kb, q):
             conclusions[c] = conclusion
 
     ### Forward chaining algorithm
+    # agenda.insert(0, sp.sympify("Not(d)"))
+    # print "querying:",
+    # print q
+    # print "\n" + "agenda: "
+    # print agenda
+    checked_agenda = []
     while agenda:
+
         p = agenda.pop()
+        checked_agenda.append(p)
+
         if p == q:
+            # print "\n" + "[p==q] p:",
+            # print p
             return True
         if inferred[p] == False:
+            # print "\n" + "[inferred[p] == False] p:",
+            # print p
             inferred[p] = True
             for c in clauses:
                 if premises[c] and p in premises[c]:
                     counts[c] = counts[c] - 1
-                if counts[c] == 0:
+                if counts[c] == 0 and conclusions[c] not in agenda and conclusions[c] not in checked_agenda:
                     agenda.insert(0, conclusions[c])
+                    # print "\n" + "adding [",
+                    # print conclusions[c],
+                    #print "] to agenda:",
+                    # print "\n" + "agenda:",
+                    # print agenda
 
     return False
 
