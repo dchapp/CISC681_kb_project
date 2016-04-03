@@ -1,5 +1,5 @@
 import sympy as sp
-from Utilities import contains_sublist
+from Utilities import *
 
 def resolve(i, j):
     clause_i_literals = []
@@ -50,17 +50,35 @@ def resolution(kb, q):
 
     num_iter = 0
 
+    ### Check to make sure that q can actually be entailed
+    ### Auxiliary tables of premises and conclusions
+    conclusions = {}
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            conclusions[c] = None
+        else:
+            symbols_in_clause = c.args
+            for s in symbols_in_clause:
+                if type(s) != sp.Not:
+                    conclusion = s
+            conclusions[c] = conclusion
+
+    # print conclusions.values()
+    # if q not in conclusions.values():
+        # return False
+    
+
     while True:
         for i in clauses:
             for j in clauses:
                 resolvent = resolve(i,j)
 
-                #print "Resolvent:"
-                #print resolvent
+                # print "Resolvent:"
+                # print resolvent
 
                 if resolvent == None:
-                    print i
-                    print j
+                    # print i
+                    # print j
                     return True
                 else:
                     new.append(resolvent)
@@ -210,11 +228,11 @@ def backward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
-    print clauses
-    print known_true_symbols
-    print premises
-    print conclusions
-    print q
+#    print clauses
+ #   print known_true_symbols
+  #  print premises
+   # print conclusions
+    #print q
 
     return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
 
@@ -289,12 +307,22 @@ Worker function for DPLL inference
 """
 def dpll(clauses, symbols, model):
     ### Determine if there is a clause that is false in the model
+    target = len(clauses)
+    for c in clauses:
+        if clause_is_true_in_model(c, model):
+            target -= 1
+
     return False
 
 
 def clause_is_true_in_model(clause, model):
-    print "WOO"
-    return True
+    if clause in model.keys():
+        if model[clause] == True:
+            return True
+        else:
+            return False
+    else:
+        return False
 
 """
 Determines if the symbol appears with the same sign in all clauses.
@@ -331,14 +359,28 @@ def symbol_is_pure(symbol, clauses):
 """
 Determines if the clause is a unit clause. 
 A clause is a unit clause if it consists of a single symbol OR
-if all symbols in the clause are already assigned false by the model.
+if all but one symbol in the clause are already assigned false by the model.
 """
 def clause_is_unit(clause, model):
-    return False
+    if type(clause) == sp.Symbol:
+        return True
+    else:
+        symbols_in_clause = list(clause.args)
+        target = len(symbols_in_clause) - 1
+        for s in symbols_in_clause:
+            if s in model.keys():
+                if model[s] == False:
+                    target = target - 1
+        if target == 0:
+            return True
+        else:
+            return False
 
 
 
-
+"""
+A non-recursive implementation of backward chaining
+"""
 def iterative_backward_chaining(kb, q):
     clauses = list(kb.args)
 
@@ -347,6 +389,9 @@ def iterative_backward_chaining(kb, q):
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
+
+    #print "KNOWN TRUE SYMBOLS"
+    #print known_true_symbols
 
     ### Construct tables of premises and conclusions keyed by clauses
     premises = {}
@@ -381,33 +426,145 @@ def iterative_backward_chaining(kb, q):
         if conclusions[c] == q:
             candidates.append(c)
 
+    #print "CANDIDATES"
+    #print candidates
+
     ### Loop over the candidates
+    tried_to_prove = [q]
+    old_known_true_symbols = list(known_true_symbols)
     for c in candidates:
         things_to_prove = list(premises[c])
         under_consideration = []
+
+        #print "THINGS TO PROVE FOR " + str(c) + ": "  + str(things_to_prove)
+
+        it = 0
+
+        ### Sort things_to_prove in increasing number of premises
+        """
+        sorted_things_to_prove = []
+        for t in things_to_prove:
+            tup = [t, premises[t]]
+            if tup[1] == None:
+                tup[1] = 0
+            else:
+                tup[1] = len(tup[1])
+            sorted_things_to_prove.append(tup)
+        sorted(sorted_things_to_prove, key=lambda x: x[1])
+        things_to_prove = map(sorted(sorted_things_to_prove, key=lambda x: x[1]), lambda x: x[0])
+        """
+
         while things_to_prove:
+                
+            """
+            if it == 6:
+                exit()
+            """
+    
+            #print "old kts: " + str(old_known_true_symbols)
+            #print "kts: " + str(known_true_symbols)
+            #print "Iteration: " + str(it) + " THINGS TO PROVE: " + str(things_to_prove)
+            #print "Iteration: " + str(it) + " TRIED TO PROVE: " + str(tried_to_prove)
+
+            #print "pre-pop: " + str(things_to_prove)
+           
+            ttps1 = set(things_to_prove)
+            ttps2 = set(tried_to_prove)
+            if ttps1 < ttps2:
+                return False
+
+            if old_known_true_symbols != known_true_symbols:
+                #print "in here"
+                for r in tried_to_prove:
+                    #print "in tried to prove"
+                    #if r in conclusions.values() and r != q:
+                    if r in conclusions.values():
+                        #print "satisfies"
+                        #print known_true_symbols
+                        possible_premises = []
+                        for c in clauses:
+                            if conclusions[c] == r:
+                                possible_premises.append(premises[c])
+                        for pp in possible_premises:
+                            #print set(pp)
+                            #print set(known_true_symbols)
+                            s1 = set(known_true_symbols)
+                            s2 = set(pp)
+                            #print s1
+                            #print s2
+                            if s2 < s1:
+                                """
+                                print "Popping: " + str(tried_to_prove[-1])
+                                things_to_prove.append(tried_to_prove.pop())
+
+                                print "NOW TTP: " + str(things_to_prove)
+                                """
+                                known_true_symbols.append(r)
+                                tried_to_prove.remove(r)
+
             t = things_to_prove.pop()
+
+            #print "TRYING TO PROVE: " + str(t)
+            #print "old kts: " + str(old_known_true_symbols)
+            #print "kts: " + str(known_true_symbols)
+            #print "tried to prove: " + str(tried_to_prove)
+
+            #print "post-pop: " + str(things_to_prove)
             ### If known to be true, do nothing
             if t in known_true_symbols:
-                continue
+                
+                #print str(t) + " is a known true symbol"
+                
+                pass
             ### Can it proved by anything?
             elif t not in conclusions.values():
+                tried_to_prove.append(t) 
+                tried_to_prove = remove_duplicates_maintain_order(tried_to_prove)
+                things_to_prove.insert(0,t)
+                #print "nothing implies " + str(t) 
+
                 continue
 
             ### See if t can be proved using nothing but known true symbols. 
             ### If so, add it as a known true symbol. 
             ### If not, add it's premises to the stack.
             else:
-                for c in clauses:
-                    if conclusions[c] == t:
-                        things_that_prove_t = list(premises[c])
-                        ### Check if t can be proved with nothing but known true symbols
-                        if contains_sublist(known_true_symbols, things_that_prove_t):
-                            known_true_symbols.append(t)
-                        else:
-                            things_to_prove + things_that_prove_t
+                ### Did we already try to prove this and fail? 
+                ### Has the known symbol true symbol list changed?
+                if t in tried_to_prove and old_known_true_symbols == known_true_symbols:
 
-            if not things_to_prove:
+                    #print "ALREADY TRIED TO PROVE " + str(t)
+
+                    break
+                else:
+                    for c in clauses:
+                        if conclusions[c] == t:
+                            things_that_prove_t = list(premises[c])
+
+                            #print "THINGS THAT WOULD PROVE " + str(t) + ": " + str(things_that_prove_t)
+
+                            ### Check if t can be proved with nothing but known true symbols
+                            if contains_sublist(known_true_symbols, things_that_prove_t):
+                                old_known_true_symbols = list(known_true_symbols)
+                                known_true_symbols.append(t)
+                                if t in tried_to_prove:
+                                    tried_to_prove.remove(t)
+
+                                #print "ADDING " + str(t) + " TO KNOWN SYMBOLS"
+                                break
+                            else:
+                                things_to_prove = things_to_prove + things_that_prove_t
+                                tried_to_prove.append(t)
+                                tried_to_prove = remove_duplicates_maintain_order(tried_to_prove)
+           
+            things_to_prove = remove_duplicates_maintain_order(things_to_prove)
+
+
+            #print "Before empty check: " + str(things_to_prove)
+            if len(things_to_prove) == 0:
                 return True
 
+            it += 1
+    
+    #print "I got to here"
     return False

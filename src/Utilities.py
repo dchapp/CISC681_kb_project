@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 def custom_strip(s):
     s = s.strip("\n")
     s = s.strip("\t")
@@ -23,3 +25,7 @@ def custom_replace(s):
 def contains_sublist(lst, sublst):
     n = len(sublst)
     return any((sublst == lst[i:i+n]) for i in xrange(len(lst)-n+1))
+
+
+def remove_duplicates_maintain_order(lst):
+    return list(OrderedDict.fromkeys(lst))
