@@ -104,15 +104,24 @@ def resolution(kb, q):
 
 
 def forward_chaining(kb, q):
-    negation = False;
-    ### check if query is a negation
-    if type(q) == sp.Not:
-        negation = True
-        q = q.args[0]
+
 
     ### Extract all unique symbols from the kb
     clauses = list(kb.args)
     symbols = []
+
+    ### Construct agenda queue
+    ### Initially the symbols known to be true in the kb
+    agenda = []
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            agenda.append(c)
+
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in agenda:
+        negation = True
+        q = q.args[0]
 
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
@@ -122,12 +131,7 @@ def forward_chaining(kb, q):
             for s in symbols_in_clause:
                 symbols.append(s)
 
-    ### Construct agenda queue
-    ### Initially the symbols known to be true in the kb
-    agenda = []
-    for c in clauses:
-        if type(c) == sp.Symbol or type(c) == sp.Not:
-            agenda.append(c)
+
 
     ### Construct inferred table 
     ### Initially false for all symbols 
@@ -252,7 +256,7 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
 
                             break
 
-                        t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p)
+                        t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p, negation)
                         if t == True:
                             target = target - 1
                             #print "adding " + str(p) + " to kts"
@@ -273,12 +277,6 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
 
 
 def backward_chaining(kb, q):
-    negation = False;
-    ### check if query is a negation
-    if type(q) == sp.Not:
-        negation = True
-        q = q.args[0]
-
     clauses = list(kb.args)
 
     ### Construct list of symbols known to be true
@@ -286,6 +284,12 @@ def backward_chaining(kb, q):
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
+
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in known_true_symbols:
+        negation = True
+        q = q.args[0]
 
     #print "KTS: " + str(known_true_symbols)
 
@@ -475,12 +479,6 @@ def is_unit_clause(clause, model):
 A non-recursive implementation of backward chaining
 """
 def iterative_backward_chaining(kb, q):
-    negation = False;
-    ### check if query is a negation
-    if type(q) == sp.Not:
-        negation = True
-        q = q.args[0]
-
     clauses = list(kb.args)
 
     ### Construct list of symbols known to be true
@@ -488,6 +486,12 @@ def iterative_backward_chaining(kb, q):
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
+
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in known_true_symbols:
+        negation = True
+        q = q.args[0]
 
     #print "KNOWN TRUE SYMBOLS"
     #print known_true_symbols
