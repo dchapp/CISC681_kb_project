@@ -1,5 +1,7 @@
 a
 b
+~x
+Not(u)
 #c
 #d
 #e
