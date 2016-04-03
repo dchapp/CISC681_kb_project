@@ -106,7 +106,9 @@ def resolution(kb, q):
 def forward_chaining(kb, q):
     ### Extract all unique symbols from the kb
     clauses = list(kb.args)
+    # print clauses
     symbols = []
+
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             symbols.append(c)
@@ -114,7 +116,8 @@ def forward_chaining(kb, q):
             symbols_in_clause = c.args
             for s in symbols_in_clause:
                 symbols.append(s)
-
+    # print "\n"
+    # print symbols
     ### Construct agenda queue
     ### Initially the symbols known to be true in the kb
     agenda = []
