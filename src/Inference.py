@@ -104,9 +104,25 @@ def resolution(kb, q):
 
 
 def forward_chaining(kb, q):
+
+
     ### Extract all unique symbols from the kb
     clauses = list(kb.args)
     symbols = []
+
+    ### Construct agenda queue
+    ### Initially the symbols known to be true in the kb
+    agenda = []
+    for c in clauses:
+        if type(c) == sp.Symbol or type(c) == sp.Not:
+            agenda.append(c)
+
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in agenda:
+        negation = True
+        q = q.args[0]
+
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             symbols.append(c)
@@ -115,12 +131,7 @@ def forward_chaining(kb, q):
             for s in symbols_in_clause:
                 symbols.append(s)
 
-    ### Construct agenda queue
-    ### Initially the symbols known to be true in the kb
-    agenda = []
-    for c in clauses:
-        if type(c) == sp.Symbol or type(c) == sp.Not:
-            agenda.append(c)
+
 
     ### Construct inferred table 
     ### Initially false for all symbols 
@@ -136,7 +147,8 @@ def forward_chaining(kb, q):
             # How about the clause "~A"? 
         else:
             counts[c] = len(list(c.args)) - 1
- ### Auxiliary tables of premises and conclusions
+
+    ### Auxiliary tables of premises and conclusions
     premises = {}
     conclusions = {}
     for c in clauses:
@@ -154,9 +166,13 @@ def forward_chaining(kb, q):
             premises[c] = tuple(premise_list)
             conclusions[c] = conclusion
 
-    ### Forward chaining algorithm
+    ### Forward chaining algorithm    
+    checked_agenda = []
     while agenda:
+
         p = agenda.pop()
+        checked_agenda.append(p)
+
         if p == q:
             return True
         if inferred[p] == False:
@@ -164,14 +180,16 @@ def forward_chaining(kb, q):
             for c in clauses:
                 if premises[c] and p in premises[c]:
                     counts[c] = counts[c] - 1
-                if counts[c] == 0:
+                if counts[c] == 0 and conclusions[c] not in agenda and conclusions[c] not in checked_agenda:
                     agenda.insert(0, conclusions[c])
 
+    if negation == True:
+        return True
     return False
 
 
+def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q, negation):
 
-def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q):
    
     known_true_symbols = remove_duplicates_maintain_order(known_true_symbols)
 
@@ -190,6 +208,8 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
     ### If not, fail immediately.
     else:
         if q not in conclusions.values():
+            if negation == True:
+                return True
             return False
     
         ### There is at least one implication with q as its conclusion
@@ -236,7 +256,7 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
 
                             break
 
-                        t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p)
+                        t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p, negation)
                         if t == True:
                             target = target - 1
                             #print "adding " + str(p) + " to kts"
@@ -250,6 +270,8 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
                         continue
                         #return False
             
+            if negation == True:
+                return True
             return False
 
 
@@ -262,6 +284,12 @@ def backward_chaining(kb, q):
     for c in clauses:
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
+
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in known_true_symbols:
+        negation = True
+        q = q.args[0]
 
     #print "KTS: " + str(known_true_symbols)
 
@@ -289,7 +317,7 @@ def backward_chaining(kb, q):
    # print conclusions
     #print q
 
-    return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
+    return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q, negation)
 
 #    ### Backward chaining algorithm
 #    candidates = []
@@ -459,6 +487,12 @@ def iterative_backward_chaining(kb, q):
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
 
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not and q.args[0] not in known_true_symbols:
+        negation = True
+        q = q.args[0]
+
     #print "KNOWN TRUE SYMBOLS"
     #print known_true_symbols
 
@@ -486,6 +520,8 @@ def iterative_backward_chaining(kb, q):
 
     ### Check if query can possibly be entailed
     if q not in conclusions.values():
+        if negation == True:
+            return True
         return False
 
 
@@ -540,6 +576,9 @@ def iterative_backward_chaining(kb, q):
             ttps1 = set(things_to_prove)
             ttps2 = set(tried_to_prove)
             if ttps1 < ttps2:
+
+                if negation == True:
+                    return True
                 return False
 
             if old_known_true_symbols != known_true_symbols:
@@ -636,4 +675,7 @@ def iterative_backward_chaining(kb, q):
             it += 1
     
     #print "I got to here"
+
+    if negation == True:
+        return True
     return False
