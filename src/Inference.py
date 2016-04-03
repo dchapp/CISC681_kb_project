@@ -63,8 +63,9 @@ def resolution(kb, q):
                     conclusion = s
             conclusions[c] = conclusion
 
-    if q not in conclusions.values():
-        return False
+    # print conclusions.values()
+    # if q not in conclusions.values():
+        # return False
     
 
     while True:
@@ -72,12 +73,12 @@ def resolution(kb, q):
             for j in clauses:
                 resolvent = resolve(i,j)
 
-                #print "Resolvent:"
-                #print resolvent
+                # print "Resolvent:"
+                # print resolvent
 
                 if resolvent == None:
-                    print i
-                    print j
+                    # print i
+                    # print j
                     return True
                 else:
                     new.append(resolvent)

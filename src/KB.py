@@ -189,9 +189,8 @@ def run_inference_test_suite(query):
     TEST_backward_chaining(kb, q)
     print "Testing iterative backward chaining:"
     print iterative_backward_chaining(kb, q)
-    
-   # print "Testing resolution:"
-   # TEST_resolution(kb, q)
+    print "Testing resolution:"
+    TEST_resolution(kb, q)
 
 def main():
     #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
