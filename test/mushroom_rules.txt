@@ -11,7 +11,7 @@ immense thirst & frequent urination & lower abdominal pain ==> kidney failure
 # Respiratory failure rule
 blue skin & tachycardia & shortness of breathe ==> respiratory failure
 # Cardiac failure rule
-swelling in lower body & fatigue & tachycardia & shortness of breathe ==> cardiac failure
+swelling in lower body & fatigue & tachycardia & shortness of breath ==> cardiac failure
 # Hypoglycemia rule
 blood sugar level below 70 mg/dl ==> hypoglycemia
 # Acidosis rule
@@ -102,40 +102,45 @@ genus is podostroma & location is japan ==> species is cornu-damae
 cap shape is irregular & host orgnanism is rotting wood & gill type is attached & climate is subtropical ==> genus is trogia
 #Trogia venenata rule
 genus is trogia and cap color is white & cap texture is smooth ==> species is venenata
-# Amanita
-#alpha amanitin poisoning ==> genus is amanita
-# Alpha Amanitin poisoning rule
-diarrhea & liver failure & kidney failure & respiratory failure ==> alpha amanitin poisoning
-# Clitocybe
-#muscarine poisoning ==> genus is clitocybe
-# Muscarine poisoning rule
-miosis & lacrimation & circulatory shock ==> muscarine poisoning
-# Cortinarius 
+# Amanita from toxin rule
+in north america & alpha amanitin poisoning ==> genus is amanita
+# Clitocybe from toxin rule
+clitocybe muscarine poisoning ==> genus is clitocybe
+# Clitocybe Muscarine poisoning rule
+miosis & lacrimation & circulatory shock ==> clitocybe muscarine poisoning
+# Cortinarius toxin rule
 orellanine poisoning ==> genus is cortinarius
 # Orellanine poisoning rule
 headache & myalgia & nausea & kidney failure ==> orellanine poisoning
-# Galerina 
-#alpha amanitin poisoning ==> genus is galerina
-# Gyromitra
+# Galerina toxin rule
+gamma amanitin poisoning ==> genus is galerina
+# Gamma Amanitin poisoning rule
+diarrhea & liver failure & kidney failure & coma ==> gamma amanitin poisoning
+# Gyromitra toxin rule
 gyromitrin poisoning ==> genus is gyromitra
 # Gyromitrin poisoning rule
-juandice & diarrhea & vomiting & coma & vertigo & liver failure & kidney failure & seizures ==> gyromitrin poisoning
-# Inocybe
-#muscarine poisoning ==> genus is inocybe
-# Lepiota
-#Amatoxin
-# Pholiotina
+juandice & diarrhea & vomiting & coma & vertigo & liver failure & seizures ==> gyromitrin poisoning
+# Inocybe toxin rule
+inocybe muscarine poisoning ==> genus is inocybe
+# Inocybe Muscarine poisoning
+constriction of the pharynx & diarrhea & circulatory shock ==> inocybe muscarine poisoning
+# Lepiota toxin rule
+in europe & alpha amanitin poisoning ==> genus is lepiota
+#alpha amanitin poisoning rule
+respiratory failure & kidney failure & liver failure ==> alpha amanitin poisoning
+# Pholiotina toxin rule
+amatoxin poisoning ==> genus is pholiotina
 #Amatoxin poisoning rule
 liver failure & kidney failure & back pain & insomnia & coughing ==> amatoxin poisoning
-# Pleurocybella
+# Pleurocybella toxin rule
 pleurocybellaziridine poisoning ==> genus is pleurocybella
 #Pleurocybellaziridine poisoning rule
 encephalopathy ==> pleurocybellaziridine poisoning
-# Podostroma
+# Podostroma toxin rule
 trichothocene poisoning ==> genus is podostroma
 #Trichothecene poisoning rule
 stomach pain & peeling skin on the face & shrinking of the cerebellum ==> trichothocene poisoning
-# Trogia
+# Trogia toxin rule
 yunnan sudden death syndrome ==> genus is trogia
 #Yunnan sudden death syndrom
 in yunnan china & nausea & dizziness & heart palpitations & seizures & fatigue ==> yunnan sudden death syndrome

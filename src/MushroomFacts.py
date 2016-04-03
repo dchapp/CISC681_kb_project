@@ -60,7 +60,9 @@ def define_properties():
 						  "coughing",
 						  "stomach pain",
 						  "peeling skin of the face",
-						  "shrinking of the cerebellum"]
+						  "shrinking of the cerebellum",
+						  "in north america",
+						  "in europe"]
 
     return (mushroom_properties, patient_properties)
 
