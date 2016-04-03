@@ -185,7 +185,7 @@ def forward_chaining(kb, q):
 
 
 
-def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q):
+def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q, negation):
    
     known_true_symbols = remove_duplicates_maintain_order(known_true_symbols)
 
@@ -204,6 +204,8 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
     ### If not, fail immediately.
     else:
         if q not in conclusions.values():
+            if negation == True:
+                return True
             return False
     
         ### There is at least one implication with q as its conclusion
@@ -264,11 +266,19 @@ def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusi
                         continue
                         #return False
             
+            if negation == True:
+                return True
             return False
 
 
 
 def backward_chaining(kb, q):
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not:
+        negation = True
+        q = q.args[0]
+
     clauses = list(kb.args)
 
     ### Construct list of symbols known to be true
@@ -303,7 +313,7 @@ def backward_chaining(kb, q):
    # print conclusions
     #print q
 
-    return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q)
+    return backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q, negation)
 
 #    ### Backward chaining algorithm
 #    candidates = []
