@@ -240,6 +240,12 @@ def main():
                     print "Query is entailed by knowledge base."
                 else:
                     print "Query is not entailed by knowledge base."
+            elif algorithm == "iterative backward chaining":
+                truth_value = iterative_backward_chaining(kb, query)
+                if truth_value == True:
+                    print "Query is entailed by knowledge base."
+                else:
+                    print "Query is not entailed by knowledge base."
             else:
                 print "Unsupported algorithm specified."
 
