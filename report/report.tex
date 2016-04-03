@@ -24,7 +24,15 @@ Some stuff goes here ~\cite{russell-norvig-aima} ~\cite{python-doc} ~\cite{sympy
 \section{Related Work}
 
 \section{Knowledge Base}
+The precise identification of a mushroom can be a difficult task requiring careful and complete inspection of the mushroom and in some cases inspection of its spores under a microscope or application of reagents to its tissue.~\cite{handbook-mushroom-poison}
+In the context of identifying a poisonous mushroom after ingestion, this complex task is further confounded by the possibility that only an incomplete specimen remains, that an identifying component such as a volva fell off during harvesting, or more simply that the symptoms of mushroom poisoning render self-diagnosis impossible. 
+Nevertheless, even if the exact species--e.g. \emph{Amanita Phalloides} the "Destroying Angel"--of poisonous mushroom cannot be identified, determination of the genus coupled with information about the patient's symptoms can be sufficient to determine the type of poisoning--e.g. \emph{amatoxin}--and recommend a treatment. 
+With these considerations in mind, we collected sets of rules for mushroom identification and for linking sets of symptoms--e.g. jaundice--to syndromes--e.g. liver failure--associated with specific toxins. 
 
+\subsection{Mushroom Identification Rules}
+
+
+\subsection{Symptom-to-Syndrome Rules}
 
 \section{Implementation}
 We chose to implement the knowledge system as a command-line tool written primarily in Python~\cite{python-doc} for two primary reasons. 
@@ -45,11 +53,34 @@ We implement three inference algorithms in this knowledge system: resolution, fo
 
 
 
+
+
 \section{Evaluation}
 
 \subsection{Correctness}
 
 \subsection{Performance}
+In order for a knowledge system to be useful in real diagnostic situations, it must deliver correct results quickly. 
+For two of the algorithms considered--forward chaining and backward chaining--there is a suitable performance guarantee. 
+Namely, one can prove that these algorithms run in linear time with respect to the size of the knowledge base, provided that the the knowledge base consists only of i\emph{Horn Clauses}.~\cite{russell-norvig-aima}. 
+Our implementation guarantees this property of the knowledge base by ensuring that the knowledge base is in CNF before it is passed into the inference algorithms. 
+Moreover, linear time is the worst case scenario for backward chaining. 
+In many cases, the backward chaining algorithm will terminate much faster, though this is strongly dependent on rules and facts that exist within the knowledge base. 
+
+However, the performance of the resolution algorithm is much worse. (continued discussion goes here)
+
+Run time is not the only performance concern to be addressed. 
+The memory requirements of the inference algorithms also vary which, were this knowledge system to be deployed on embedded device in a clinincal environment, would need to be taken into account. 
+In particular, we provide two versions of the backward chaining algorithm--a recursive implementation and a purely iterative implementation. 
+Both provide correct performance, but the recursive implementation's many function calls can introduces intolerable overhead in a resource constrained environment. 
+During development, we encountered a curious problem while testing the recursive implementation's correctness.
+The entire correctness test suite would pass on a MacBook Air with 4 GB RAM, but only some of the tests would pass when the code was run in an online IDE in the Chrome web browser.
+We conjectured that due to the need to potentially host many users simultaneously on fixed hardware, the online IDE imposes strict memory use constraints on any individual user. 
+Discovery of this limitation inspired us to implement an iterative backward chaining algorithm, which is able to pass the entire test suite even in the online IDE environment. 
+
+
+
+
 
 
 \bibliographystyle{IEEEtran}
