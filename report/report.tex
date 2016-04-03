@@ -24,7 +24,15 @@ Some stuff goes here ~\cite{russell-norvig-aima} ~\cite{python-doc} ~\cite{sympy
 \section{Related Work}
 
 \section{Knowledge Base}
+The precise identification of a mushroom can be a difficult task requiring careful and complete inspection of the mushroom and in some cases inspection of its spores under a microscope or application of reagents to its tissue.~\cite{handbook-mushroom-poison}
+In the context of identifying a poisonous mushroom after ingestion, this complex task is further confounded by the possibility that only an incomplete specimen remains, that an identifying component such as a volva fell off during harvesting, or more simply that the symptoms of mushroom poisoning render self-diagnosis impossible. 
+Nevertheless, even if the exact species--e.g. \emph{Amanita Phalloides} the "Destroying Angel"--of poisonous mushroom cannot be identified, determination of the genus coupled with information about the patient's symptoms can be sufficient to determine the type of poisoning--e.g. \emph{amatoxin}--and recommend a treatment. 
+With these considerations in mind, we collected sets of rules for mushroom identification and for linking sets of symptoms--e.g. jaundice--to syndromes--e.g. liver failure--associated with specific toxins. 
 
+\subsection{Mushroom Identification Rules}
+
+
+\subsection{Symptom-to-Syndrome Rules}
 
 \section{Implementation}
 We chose to implement the knowledge system as a command-line tool written primarily in Python~\cite{python-doc} for two primary reasons. 
