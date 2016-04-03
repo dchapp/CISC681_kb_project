@@ -172,31 +172,85 @@ def forward_chaining(kb, q):
 
 
 def backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, q):
+   
+    known_true_symbols = remove_duplicates_maintain_order(known_true_symbols)
+
+    #print "KTS: " + str(known_true_symbols)
+    #print conclusions.values()
+
     ### First check if query is a known true symbol
     if q in known_true_symbols:
+        
+        #print "query " + str(q) + " is known true symbol"
+
         return True
+
+
     ### Otherwise, check if there is a conclusion matching q
     ### If not, fail immediately.
     else:
         if q not in conclusions.values():
             return False
+    
         ### There is at least one implication with q as its conclusion
         ### Now we need to recurse on those implications' premises
         else:
-            candidate_conclusions = []
+
+            #print "checking if query entailed by known true symbols"
+
+            query_premise_sets = []
             for c in clauses:
                 if conclusions[c] == q:
+                    query_premise_sets.append(premises[c])
+
+            #print query_premise_sets
+
+            ### Now loop through the premise sets to see if any of them are a subset of the KTS
+            for qps in query_premise_sets:
+                s1 = set(qps)
+                s2 = set(known_true_symbols)
+                if s1 < s2:
+                    known_true_symbols.append(q)
+                    return True
+            
+            
+            #print "in recursive section"
+
+            candidate_conclusions = []
+            for c in clauses:
+
+
+                if conclusions[c] == q:
+                    #print str(c) + " currently under consideration"
                     pending_premises = premises[c]
+
+                    #print "pending premises: " + str(pending_premises)
+
                     target = len(pending_premises)
                     for p in pending_premises:
+
+                        ### Check if premise currently provable. If not, move on to next clause
+                        if p not in conclusions.values() and p not in known_true_symbols:
+
+                            #print str(p) + " not currently provable"
+
+                            break
+
                         t = backward_chaining_helper(kb, clauses, known_true_symbols, premises, conclusions, p)
                         if t == True:
                             target = target - 1
+                            #print "adding " + str(p) + " to kts"
+                            known_true_symbols.append(p)
+
+                    #print str(target)
 
                     if target == 0:
                         return True
                     else:
-                        return False
+                        continue
+                        #return False
+            
+            return False
 
 
 
@@ -209,6 +263,7 @@ def backward_chaining(kb, q):
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
 
+    #print "KTS: " + str(known_true_symbols)
 
     ### Construct tables of premises and conclusions keyed by clauses
     premises = {}
@@ -298,7 +353,7 @@ def dpll_satisfiable(kb, q):
                 new_symbols.append(sp.Not(a))
         symbols = symbols + new_symbols
     symbols = list(set(symbols))
-    model = []
+    model = {}
     return dpll(clauses, symbols, model)
 
 
@@ -309,10 +364,22 @@ def dpll(clauses, symbols, model):
     ### Determine if there is a clause that is false in the model
     target = len(clauses)
     for c in clauses:
-        if clause_is_true_in_model(c, model):
-            target -= 1
+        if clause_is_true_in_model(c, model) == "not in model":
+            continue
+        else:
+            if clause_is_true_in_model(c, model):
+                target -= 1
+            else:
+                return False
+    if target == 0:
+        return True
 
-    return False
+    ### Loop over symbols and recurse with modified models if pure symbol found
+    #for s in symbols:
+        #if is_pure_symbol(s, clauses
+
+    
+
 
 
 def clause_is_true_in_model(clause, model):
@@ -322,16 +389,16 @@ def clause_is_true_in_model(clause, model):
         else:
             return False
     else:
-        return False
+        return "not in model"
 
 """
 Determines if the symbol appears with the same sign in all clauses.
 """
-def symbol_is_pure(symbol, clauses):
+def is_pure_symbol(symbol, clauses):
     ### Get the instances of the symbol 
 
-    print symbol
-    print clauses
+    #print symbol
+    #print clauses
 
     instances = []
     for c in clauses:
@@ -344,26 +411,26 @@ def symbol_is_pure(symbol, clauses):
             if c == symbol or sp.Not(c) == symbol:
                 instances.append(c)
 
-    print instances
+    #print instances
 
     ### Determine if symbol appears with same sign everywhere
     instances = set(instances)
 
-    print instances
+    #print instances
 
     if len(instances) == 1:
-        return True
+        return (True, symbol)
     else:
-        return False
+        return (False, symbol)
 
 """
 Determines if the clause is a unit clause. 
 A clause is a unit clause if it consists of a single symbol OR
 if all but one symbol in the clause are already assigned false by the model.
 """
-def clause_is_unit(clause, model):
+def is_unit_clause(clause, model):
     if type(clause) == sp.Symbol:
-        return True
+        return (True, clause)
     else:
         symbols_in_clause = list(clause.args)
         target = len(symbols_in_clause) - 1
@@ -371,10 +438,12 @@ def clause_is_unit(clause, model):
             if s in model.keys():
                 if model[s] == False:
                     target = target - 1
+                else:
+                    single_symbol = s
         if target == 0:
-            return True
+            return (True, single_symbol)
         else:
-            return False
+            return (False, 0)
 
 
 
