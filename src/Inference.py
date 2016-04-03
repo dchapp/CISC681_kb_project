@@ -390,8 +390,8 @@ def iterative_backward_chaining(kb, q):
         if type(c) == sp.Symbol or type(c) == sp.Not:
             known_true_symbols.append(c)
 
-    print "KNOWN TRUE SYMBOLS"
-    print known_true_symbols
+    #print "KNOWN TRUE SYMBOLS"
+    #print known_true_symbols
 
     ### Construct tables of premises and conclusions keyed by clauses
     premises = {}
@@ -426,8 +426,8 @@ def iterative_backward_chaining(kb, q):
         if conclusions[c] == q:
             candidates.append(c)
 
-    print "CANDIDATES"
-    print candidates
+    #print "CANDIDATES"
+    #print candidates
 
     ### Loop over the candidates
     tried_to_prove = [q]
@@ -436,7 +436,7 @@ def iterative_backward_chaining(kb, q):
         things_to_prove = list(premises[c])
         under_consideration = []
 
-        print "THINGS TO PROVE FOR " + str(c) + ": "  + str(things_to_prove)
+        #print "THINGS TO PROVE FOR " + str(c) + ": "  + str(things_to_prove)
 
         it = 0
 
@@ -461,10 +461,10 @@ def iterative_backward_chaining(kb, q):
                 exit()
             """
     
-            print "old kts: " + str(old_known_true_symbols)
-            print "kts: " + str(known_true_symbols)
-            print "Iteration: " + str(it) + " THINGS TO PROVE: " + str(things_to_prove)
-            print "Iteration: " + str(it) + " TRIED TO PROVE: " + str(tried_to_prove)
+            #print "old kts: " + str(old_known_true_symbols)
+            #print "kts: " + str(known_true_symbols)
+            #print "Iteration: " + str(it) + " THINGS TO PROVE: " + str(things_to_prove)
+            #print "Iteration: " + str(it) + " TRIED TO PROVE: " + str(tried_to_prove)
 
             #print "pre-pop: " + str(things_to_prove)
            
@@ -474,24 +474,24 @@ def iterative_backward_chaining(kb, q):
                 return False
 
             if old_known_true_symbols != known_true_symbols:
-                print "in here"
+                #print "in here"
                 for r in tried_to_prove:
-                    print "in tried to prove"
+                    #print "in tried to prove"
                     #if r in conclusions.values() and r != q:
                     if r in conclusions.values():
-                        print "satisfies"
-                        print known_true_symbols
+                        #print "satisfies"
+                        #print known_true_symbols
                         possible_premises = []
                         for c in clauses:
                             if conclusions[c] == r:
                                 possible_premises.append(premises[c])
                         for pp in possible_premises:
-                            print set(pp)
-                            print set(known_true_symbols)
+                            #print set(pp)
+                            #print set(known_true_symbols)
                             s1 = set(known_true_symbols)
                             s2 = set(pp)
-                            print s1
-                            print s2
+                            #print s1
+                            #print s2
                             if s2 < s1:
                                 """
                                 print "Popping: " + str(tried_to_prove[-1])
@@ -504,16 +504,16 @@ def iterative_backward_chaining(kb, q):
 
             t = things_to_prove.pop()
 
-            print "TRYING TO PROVE: " + str(t)
+            #print "TRYING TO PROVE: " + str(t)
             #print "old kts: " + str(old_known_true_symbols)
             #print "kts: " + str(known_true_symbols)
-            print "tried to prove: " + str(tried_to_prove)
+            #print "tried to prove: " + str(tried_to_prove)
 
             #print "post-pop: " + str(things_to_prove)
             ### If known to be true, do nothing
             if t in known_true_symbols:
                 
-                print str(t) + " is a known true symbol"
+                #print str(t) + " is a known true symbol"
                 
                 pass
             ### Can it proved by anything?
@@ -521,7 +521,7 @@ def iterative_backward_chaining(kb, q):
                 tried_to_prove.append(t) 
                 tried_to_prove = remove_duplicates_maintain_order(tried_to_prove)
                 things_to_prove.insert(0,t)
-                print "nothing implies " + str(t) 
+                #print "nothing implies " + str(t) 
 
                 continue
 
@@ -533,7 +533,7 @@ def iterative_backward_chaining(kb, q):
                 ### Has the known symbol true symbol list changed?
                 if t in tried_to_prove and old_known_true_symbols == known_true_symbols:
 
-                    print "ALREADY TRIED TO PROVE " + str(t)
+                    #print "ALREADY TRIED TO PROVE " + str(t)
 
                     break
                 else:
@@ -541,7 +541,7 @@ def iterative_backward_chaining(kb, q):
                         if conclusions[c] == t:
                             things_that_prove_t = list(premises[c])
 
-                            print "THINGS THAT WOULD PROVE " + str(t) + ": " + str(things_that_prove_t)
+                            #print "THINGS THAT WOULD PROVE " + str(t) + ": " + str(things_that_prove_t)
 
                             ### Check if t can be proved with nothing but known true symbols
                             if contains_sublist(known_true_symbols, things_that_prove_t):
@@ -550,7 +550,7 @@ def iterative_backward_chaining(kb, q):
                                 if t in tried_to_prove:
                                     tried_to_prove.remove(t)
 
-                                print "ADDING " + str(t) + " TO KNOWN SYMBOLS"
+                                #print "ADDING " + str(t) + " TO KNOWN SYMBOLS"
                                 break
                             else:
                                 things_to_prove = things_to_prove + things_that_prove_t
@@ -566,5 +566,5 @@ def iterative_backward_chaining(kb, q):
 
             it += 1
     
-    print "I got to here"
+    #print "I got to here"
     return False
