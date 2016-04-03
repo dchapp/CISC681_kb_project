@@ -475,6 +475,12 @@ def is_unit_clause(clause, model):
 A non-recursive implementation of backward chaining
 """
 def iterative_backward_chaining(kb, q):
+    negation = False;
+    ### check if query is a negation
+    if type(q) == sp.Not:
+        negation = True
+        q = q.args[0]
+
     clauses = list(kb.args)
 
     ### Construct list of symbols known to be true
@@ -510,6 +516,8 @@ def iterative_backward_chaining(kb, q):
 
     ### Check if query can possibly be entailed
     if q not in conclusions.values():
+        if negation == True:
+            return True
         return False
 
 
@@ -564,6 +572,8 @@ def iterative_backward_chaining(kb, q):
             ttps1 = set(things_to_prove)
             ttps2 = set(tried_to_prove)
             if ttps1 < ttps2:
+                if negation == True:
+                    return True
                 return False
 
             if old_known_true_symbols != known_true_symbols:
@@ -660,4 +670,6 @@ def iterative_backward_chaining(kb, q):
             it += 1
     
     #print "I got to here"
+    if negation == True:
+        return True
     return False
