@@ -87,6 +87,7 @@ def resolution(kb, q):
         #print new
 
         ### Check if new is a subset of clauses
+        """
         num_new_clauses = len(new)
         print "Number of new clauses: " + str(num_new_clauses)
         for c in new:
@@ -94,6 +95,10 @@ def resolution(kb, q):
                 num_new_clauses -= 1
 
         if num_new_clauses == 0:
+            return False
+        """
+
+        if set(new) < set(clauses):
             return False
 
         ### Update clauses
@@ -339,115 +344,321 @@ def backward_chaining(kb, q):
 #    return False
 
 
-"""
-Driver function for DPLL inference
-"""
-def dpll_satisfiable(kb, q):
-    sentence = kb & ~q
-    clauses = list(sentence.args)
-    symbols = []
-    for c in clauses:
-        args = list(c.args)
-        new_symbols = []
-        for a in args:
-            if type(a) == sp.Symbol:
-                new_symbols.append(a)
-            else:
-                new_symbols.append(sp.Not(a))
-        symbols = symbols + new_symbols
-    symbols = list(set(symbols))
-    model = {}
-    return dpll(clauses, symbols, model)
+#"""
+#Driver function for DPLL inference
+#"""
+#def dpll_satisfiable(kb, q):
+#    sentence = kb & ~q
+#    clauses = list(sentence.args)
+#    symbols = []
+#    for c in clauses:
+#        args = list(c.args)
+#        new_symbols = []
+#        for a in args:
+#            if type(a) == sp.Symbol:
+#                new_symbols.append(a)
+#            else:
+#                new_symbols.append(sp.Not(a))
+#        symbols = symbols + new_symbols
+#    symbols = list(set(symbols))
+#    model = {}
+#    return dpll(clauses, symbols, model)
+#
+#
+#"""
+#Worker function for DPLL inference
+#"""
+#def dpll(clauses, symbols, model):
+#
+#    print "CLAUSES: " + str(clauses)
+#    print "SYMBOLS: " + str(symbols)
+#    print model
+#    
+#
+#    ### Determine if there is a clause that is false in the model
+#    target = len(clauses)
+#    for c in clauses:
+#        if clause_is_true_in_model(c, model) == "not in model":
+#            continue
+#        else:
+#            if clause_is_true_in_model(c, model):
+#                target -= 1
+#            else:
+#                return False
+#    if target == 0:
+#        return True
+#
+#    ### Loop over symbols and recurse with modified models if pure symbol found
+#    for s in symbols:
+#        (truth_value, sign) = is_pure_symbol(symbols, s, clauses)
+#        if truth_value == True:
+#            print s
+#            #print symbols
+#            #print s
+#            new_symbols = list(symbols)
+#            #print new_symbols
+#            if type(s) == sp.Not:
+#                s = sp.Not(s)
+#                if s in new_symbols:
+#                    print "woo"
+#                    print new_symbols
+#                    print s
+#                    new_symbols.remove(s)
+#            new_model = dict(model)
+#            new_model[s] = sign
+#            return dpll(clauses, new_symbols, new_model)
+#
+#    #exit()
+#
+#    ### Loop over clauses and recurse with modified model if unit clause found
+#    for c in clauses:
+#        print c
+#        (truth_value, symbol, value) = is_unit_clause(c, model, symbols)
+#        if truth_value == True:
+#            new_symbols = list(symbols)
+#            print new_symbols
+#            print symbol
+#            new_symbols.remove(symbol)
+#            new_model = dict(model)
+#            new_model[s] = value
+#            return dpll(clauses, new_symbols, new_model)
+#
+#    first_symbol = symbols.pop(0)
+#    new_model_a = dict(model)
+#    new_model_a[first_symbol] = 1
+#    new_model_b = dict(model)
+#    new_model_b[first_symbol] = 0
+#    return dpll(clauses, symbols, new_model_a) or dpll(clauses, symbols, new_model_b)
+#    
+#    
+#
+#
+#
+#def clause_is_true_in_model(clause, model):
+#    if clause in model.keys():
+#        if model[clause] == True:
+#            return True
+#        else:
+#            return False
+#    else:
+#        return "not in model"
+#
+#"""
+#Determines if the symbol appears with the same sign in all clauses.
+#"""
+#def is_pure_symbol(symbols, symbol, clauses):
+#    ### Get the instances of the symbol 
+#
+#    #print symbol
+#    #print clauses
+#
+#    ### Determine if the the symbol is still in the symbol list
+#    if symbol not in symbols:
+#        return False
+#
+#    instances = []
+#    for c in clauses:
+#        if type(c) == sp.Or:
+#            symbols_in_clause = list(c.args)
+#            for s in symbols_in_clause:
+#                if s == symbol or sp.Not(s) == symbol:
+#                    instances.append(s)
+#        else:
+#            if c == symbol or sp.Not(c) == symbol:
+#                instances.append(c)
+#
+#    #print instances
+#
+#    ### Determine if symbol appears with same sign everywhere
+#    instances = list(set(instances))
+#
+#    #print instances
+#
+#    if len(instances) == 1:
+#        if type(instances[0]) == sp.Symbol:
+#            sign = 1
+#        else:
+#            sign = 0
+#        return (True, sign)
+#    else:
+#        return (False, 0)
+#
+#"""
+#Determines if the clause is a unit clause. 
+#A clause is a unit clause if it consists of a single symbol OR
+#if all but one symbol in the clause are already assigned false by the model.
+#"""
+#def is_unit_clause(clause, model, symbols):
+#    if type(clause) == sp.Symbol and clause in symbols:
+#        return (True, clause, 1)
+#    elif type(clause) == sp.Not and sp.Not(clause) in symbols:
+#        return (True, sp.Not(clause), 0)
+#    else:
+#        symbols_in_clause = list(clause.args)
+#        target = len(symbols_in_clause) - 1
+#        for s in symbols_in_clause:
+#            if s in model.keys():
+#                if model[s] == False:
+#                    target = target - 1
+#                else:
+#                    single_symbol = s
+#        if target == 0:
+#            if type(single_symbol) == sp.Symbol and single_symbol in symbols:
+#                return (True, single_symbol, 1)
+#            else:
+#                return (True, single_symbol, 0)
+#        else:
+#            return (False, -1, -1)
 
 
-"""
-Worker function for DPLL inference
-"""
-def dpll(clauses, symbols, model):
-    ### Determine if there is a clause that is false in the model
-    target = len(clauses)
-    for c in clauses:
-        if clause_is_true_in_model(c, model) == "not in model":
-            continue
-        else:
-            if clause_is_true_in_model(c, model):
-                target -= 1
-            else:
-                return False
-    if target == 0:
-        return True
-
-    ### Loop over symbols and recurse with modified models if pure symbol found
-    #for s in symbols:
-        #if is_pure_symbol(s, clauses
-
-    
 
 
-
-def clause_is_true_in_model(clause, model):
-    if clause in model.keys():
-        if model[clause] == True:
-            return True
-        else:
-            return False
-    else:
-        return "not in model"
-
-"""
-Determines if the symbol appears with the same sign in all clauses.
-"""
-def is_pure_symbol(symbol, clauses):
-    ### Get the instances of the symbol 
-
-    #print symbol
-    #print clauses
-
-    instances = []
-    for c in clauses:
-        if type(c) == sp.Or:
-            symbols_in_clause = list(c.args)
-            for s in symbols_in_clause:
-                if s == symbol or sp.Not(s) == symbol:
-                    instances.append(s)
-        else:
-            if c == symbol or sp.Not(c) == symbol:
-                instances.append(c)
-
-    #print instances
-
-    ### Determine if symbol appears with same sign everywhere
-    instances = set(instances)
-
-    #print instances
-
-    if len(instances) == 1:
-        return (True, symbol)
-    else:
-        return (False, symbol)
-
-"""
-Determines if the clause is a unit clause. 
-A clause is a unit clause if it consists of a single symbol OR
-if all but one symbol in the clause are already assigned false by the model.
-"""
-def is_unit_clause(clause, model):
-    if type(clause) == sp.Symbol:
-        return (True, clause)
-    else:
-        symbols_in_clause = list(clause.args)
-        target = len(symbols_in_clause) - 1
-        for s in symbols_in_clause:
-            if s in model.keys():
-                if model[s] == False:
-                    target = target - 1
-                else:
-                    single_symbol = s
-        if target == 0:
-            return (True, single_symbol)
-        else:
-            return (False, 0)
-
+#def dpll_satisfiable(kb, q):
+#    s = kb & ~q
+#    clauses = list(s.args)
+#    symbols = []
+#    for c in clauses:
+#        args = list(c.args)
+#        new_symbols = []
+#        for a in args:
+#            if type(a) == sp.Symbol:
+#                new_symbols.append(a)
+#            else:
+#                new_symbols.append(sp.Not(a))
+#        symbols = symbols + new_symbols
+#    symbols = list(set(symbols))
+#    model = dict((k,-1) for k in (clauses + symbols))
+#    m = dpll(clauses, symbols, model)
+#    return not m
+#
+#def dpll(clauses, symbols, model):
+#    #print "CLAUSES: " + str(clauses)
+#    #print "SYMBOLS: " + str(symbols)
+#    #print "MODEL: " + str(model)
+#    unknown_clauses = []
+#    for c in clauses:
+#        val = model[c]
+#        if val is False:
+#            return False
+#        if val is not True:
+#            unknown_clauses.append(c)
+#
+#    if not unknown_clauses or len(symbols) == 0:
+#        return model
+#
+#    p, value = find_pure_symbol(symbols, unknown_clauses)
+#    if p:
+#        new_symbols = list(symbols)
+#        new_symbols.remove(p)
+#        new_model = dict(model)
+#        new_model[p] = value
+#        return dpll(clauses, new_symbols, new_model)
+#    p, value = find_unit_clause(clauses, model)
+#    if p:
+#        new_symbols = list(symbols)
+#        new_symbols.remove(p)
+#        new_model = dict(model)
+#        new_model[p] = value
+#        return dpll(clauses, new_symbols, new_model)
+#    if len(symbols) > 1:
+#        p, symbols = symbols[0], symbols[1:]
+#    else:
+#        p, symbols = symbols[0], []
+#    new_model_p = dict(model)
+#    new_model_n = dict(model)
+#    new_model_p[p] = True
+#    new_model_n[p] = False
+#    return (dpll(clauses, symbols, new_model_p) or dpll(clauses, symbols, new_model_n))
+#
+#
+##def find_pure_symbol(symbols, clauses):
+##    for s in symbols:
+##        found_pos, found_neg = False, False
+##        for c in clauses:
+##            if not found_pos and s in list(c.args):
+##                found_pos = True
+##            if not found_neg and sp.Not(s) in list(c.args):
+##                found_neg = True
+##        if found_pos != found_neg:
+##            return s, found_pos
+##
+##    return None, None
+#
+#def find_pure_symbol(symbols, clauses):
+#    for s in symbols:
+#        found_pos, found_neg, sign = False, False, -1
+#        for c in clauses:
+#            for l in list(c.args):
+#                if s == l and type(l) == sp.Symbol:
+#                    found_pos = True
+#                if s == l and type(l) == sp.Not:
+#                    found_neg = True
+#
+#            if (found_pos and not found_neg) or (found_neg and not found_pos):
+#                if found_neg:
+#                    sign = False
+#                if found_pos:
+#                    sign = True
+#                return s, sign
+#
+#    return None, None
+#
+#
+#def find_unit_clause(clauses, model):
+#    for c in clauses:
+#        p, value = unit_clause_assign(c, model)
+#        if p:
+#            return p, value
+#
+#    return None, None
+#
+#
+#"""
+#Returns a pair (symbol, value) that makes the clause true in the model if possible
+#"""
+#def unit_clause_assign(clause, model):
+#    ### Check if more than 1 unbound variable from clause in model
+#    if type(clause) == sp.Or or type(clause) == sp.Not:
+#        L = list(clause.args)
+#    else:
+#        L = [clause]
+#    num_unbound = 0
+#    for l in L:
+#        if l not in model.keys():
+#            num_unbound += 1
+#
+#    if num_unbound > 1:
+#        return None, None
+#    else:
+#        p, value = None, None
+#        #print "AHHHH"
+#        #print L
+#        #print type(L)
+#        for l in L:
+#            #print "WOOOO"
+#            s, pos = inspect_literal(l)
+#            #print "WARGARBLE"
+#            if s in model.keys():
+#                if model[s] == True:
+#                    return None, None # Clause already true
+#                else:
+#                    p, value = s, pos
+#    return p, value
+#
+#"""
+#Returns the truth value the literal should be given to make it true
+#"""
+#def inspect_literal(literal):
+#    #print "INSIDE"
+#    if type(literal) == sp.Symbol:
+#        #print "A"
+#        return literal, True
+#    elif type(literal) == sp.Not:
+#        #print "B"
+#        return literal, False
+#    else:
+#        print "tried to inspect a non-literal"
+#        exit()
 
 
 """

@@ -8,6 +8,8 @@ from TestCases import *
 from Utilities import *
 from MushroomFacts import *
 
+from DPLL import *
+
 """
 Generate a list of SymPy symbols representing facts in the knowledge base
 """
@@ -189,6 +191,22 @@ def run_inference_test_suite(query):
     TEST_backward_chaining(kb, q)
     print "Testing iterative backward chaining:"
     print iterative_backward_chaining(kb, q)
+
+    #print "Testing resolution"
+    #print resolution(kb, q)
+
+
+    print "Testing DPLL"
+    print dpll_satisfiable((kb & ~q))
+    
+    """
+    print parse_fact_file("../test/facts1.txt")
+    print parse_rule_file("../test/rules1.txt")
+    print "KB"
+    print kb
+    print "SENTENCE"
+    print (kb & ~q).args
+    """
 
 def main():
     #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
