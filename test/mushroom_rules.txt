@@ -29,79 +29,79 @@ genus is amanita & location is japan ==> species is amanita sphaerobulbosa
 # Amanita Exitialis Location rule
 genus is amanita & location is guangdong province China ==> species is amanita exitialis
 # Amanita arocheae rule
-genus is amanita & cap color is gray & cap texture is sticky ==> species is arocheae
+genus is amanita & cap color is gray & cap texture is sticky ==> species is amanita rocheae
 # Amanita bisporigera rule
-genus is amanita & cap color is white with cream spot & cap texture is dry ==> species is bisporigera
+genus is amanita & cap color is white with cream spot & cap texture is dry ==> species is amanita bisporigera
 # Amanita magnivelaris rule
-genus is amanita & stem has ring & stem has volva & location is New York ==> species is magnivelaris
+genus is amanita & stem has ring & stem has volva & location is New York ==> species is amanita magnivelaris
 # Amanita ocreata rule
-genus is amanita & odor is bleach & season is spring ==> species is ocreata
+genus is amanita & odor is bleach & season is spring ==> species is amanita ocreata
 # Amanita phalloides rule
-genus is amanita & cap color is yellow & cap texture is sticky & odor is sweet ==> species is phalloides
+genus is amanita & cap color is yellow & cap texture is sticky & odor is sweet ==> species is amanita phalloides
 # Amanita smithiana rule
-genus is amanita & cap texture is scaled & stem texture is scaled & host organism is soil ==> species is smithiana
+genus is amanita & cap texture is scaled & stem texture is scaled & host organism is soil ==> species is amanita smithiana
 # Amanita subjunquillea rule
-genus is amanita & stem has ring & stem has volva & location is asia ==> species is subjunquillea
+genus is amanita & stem has ring & stem has volva & location is asia ==> species is amanita subjunquillea
 # Amanita verna rule
-genus is amanita & season is spring & location is europe ==> species is verna
+genus is amanita & season is spring & location is europe ==> species is amanita verna
 # Amanita virosa rule
-genus is amanita & gill type is on hymenium & odor is radish ==> species is virosa
+genus is amanita & gill type is on hymenium & odor is radish ==> species is amanita virosa
 # Clitocybe Genus rule
 cap shape is depressed & hymenium is adnate ==> genus is clitocybe
 # Clitocybe dealbata rule
-genus is clitocybe & cap color is white ==> species is dealbata
+genus is clitocybe & cap color is white ==> species is clitocybe dealbata
 # Clitocybe rivulosa rule
-genus is clitocybe & cap color is white with pink ==> species is rivulosa
+genus is clitocybe & cap color is white with pink ==> species is clitocybe rivulosa
 # Cortinarius Genus rule
 spore print color is brown & gill type is cobweb cover & host organism is trees ==> genus is cortinarius
 #Cortinarius gentilis rule
-genus is cortinarius & cap shape is convex ==> species is gentillis
+genus is cortinarius & cap shape is convex ==> species is cortinarius gentillis
 #Cortinarius orellanus rule
-genus is cortinarius & cap shape is concave ==> species is orellanus
+genus is cortinarius & cap shape is concave ==> species is cortinarius orellanus
 #Cortinarius rubellus rule
-genus is cortinarius & cap shape is umbonate ==> species is rubellus
+genus is cortinarius & cap shape is umbonate ==> species is cortinarius rubellus
 #Cortinarius splendens rule
-genus is cortinarius & host organism is European beech ==> species is splendens
+genus is cortinarius & host organism is European beech ==> species is cortinarius splendens
 # Galerina Genus rule
 spore print color is yellow orange & host organism is felled logs ==> genus is galerina
 #Galerina marginata rule
-genus is galerina & gill color is brown & hymenium is adnexed & odor is flour ==> species is marginata
+genus is galerina & gill color is brown & hymenium is adnexed & odor is flour ==> species is galerina marginata
 #Galerina sulciceps rule
-genus is galerina & hymenium is adnate & cap shape is flat ==> species is sulciceps
+genus is galerina & hymenium is adnate & cap shape is flat ==> species is galerina sulciceps
 # Gyromitra Genus rule
 cap shape is irregular & cap texture is smooth & cap color is red ==> genus is gyromitra
 # Gyromitra esculenta rule
-genus is gyromitra & hymenium is smooth & stem color is yellow ==> species is esculenta
+genus is gyromitra & hymenium is smooth & stem color is yellow ==> species is gyromitra esculenta
 # Lepiota Genus rule
 cap texture is scaled & odor is rubbery & spore print color is white ==> genus is lepiota
 #Lepiota brunneoincarnata rule
-genus is lepiota & cap shape is campanulate ==> species is brunneoincarnata
+genus is lepiota & cap shape is campanulate ==> species is lepiota brunneoincarnata
 #Lepiota castanea rule
-genus is lepiota & cap color is red & gill color is white ==> species is castanea
+genus is lepiota & cap color is red & gill color is white ==> species is lepiota castanea
 #Lepiota helveola rule
-genus is lepiota & gill color is white & gill type is on hymenium ==> species is helveola
+genus is lepiota & gill color is white & gill type is on hymenium ==> species is lepiota helveola
 #Lepiota subincarnata rule
-genus is lepiota & cap color is pink ==> species is subincarnata
+genus is lepiota & cap color is pink ==> species is lepiota subincarnata
 # Inocybe Genus rule
 spore print color is brown & cap shape is conical & cap texture is fibrous ==> genus is inocybe
 # Inocybe erubescens rule
-genus is inocybe & odor is musty & gill type is on hymenium ==> species is erubescens
+genus is inocybe & odor is musty & gill type is on hymenium ==> species is inocybe erubescens
 # Pholiotina Genus rule
 spore print color is brown & cap color is brown & stem color is brown ==> genus is pholiotina
 # Pholiotina rugosa rule
-genus is pholiotina & gill type is adnexed ==> species is rugosa
+genus is pholiotina & gill type is adnexed ==> species is pholiotina rugosa
 # Pleurocybella Genus rule
 cap color is white & cap texture is fragile ==> genus is pleurocybella
 # Pleurocybella porrigens rule
-genus is pleurocybella & climate is temperate forests ==> species is porrigens
+genus is pleurocybella & climate is temperate forests ==> species is pleurocybella porrigens
 # Podostroma Genus rule
 cap shape is irregular & cap color is red & spore print color is yellow ==> genus is podostroma
 # Podostroma cornudamae rule
-genus is podostroma & location is japan ==> species is cornudamae
+genus is podostroma & location is japan ==> species is podostroma cornudamae
 # Trogia Genus rule
 cap shape is irregular & host orgnanism is rotting wood & gill type is attached & climate is subtropical ==> genus is trogia
 #Trogia venenata rule
-genus is trogia and cap color is white & cap texture is smooth ==> species is venenata
+genus is trogia and cap color is white & cap texture is smooth ==> species is troiga venenata
 # Amanita from toxin rule
 in north america & alpha amanitin poisoning ==> genus is amanita
 # Clitocybe from toxin rule

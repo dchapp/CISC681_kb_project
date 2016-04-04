@@ -19,6 +19,7 @@ def custom_replace(s):
     s = s.replace(",", "")
     s = s.replace(";", "")
     s = s.replace(":", "")
+    s = s.replace("-", " ")
     s = s.replace(" ", "_")
     return s
 

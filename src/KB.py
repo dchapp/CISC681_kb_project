@@ -190,15 +190,123 @@ def run_inference_test_suite(query):
     print "Testing iterative backward chaining:"
     print iterative_backward_chaining(kb, q)
 
+
+def deduce_poison_type(kb, alg):
+    poison_types = ["clitocybe muscarine", 
+                    "orellanine", 
+                    "gamma amanitin", 
+                    "gyromitrin",
+                    "inocybe muscarine",
+                    "alpha amanitin",
+                    "amatoxin",
+                    "pleurocybellaziridine",
+                    "trichothocene"]
+    possible_poisons = []
+    for p in poison_types:
+        query_string = p + " poisoning"
+        query = sp.sympify(custom_replace(query_string))
+        if alg == "resolution":
+            truth_value = resolution(kb, query)
+        elif alg == "forward chaining":
+            truth_value = forward_chaining(kb, query)
+        elif alg == "backward chaining":
+            truth_value = backward_chaining(kb, query)
+        elif alg == "iterative backward chaining":
+            truth_value = iterative_backward_chaining(kb, query)
+        else:
+            truth_value = False
+
+        if truth_value == True:
+            possible_poisons.append(query_string)
+
+    return possible_poisons
+
+def deduce_mushroom_genus(kb, alg):
+    genuses = ["amanita", 
+               "clitocybe",
+               "cortinarius",
+               "galerina",
+               "gyromitra",
+               "lepiota",
+               "inocybe",
+               "pholiotina",
+               "pleurocybella",
+               "podostroma",
+               "troiga"]
+    possible_genuses = []
+    for g in genuses:
+        query_string = "genus is " + g
+        query = sp.sympify(custom_replace(query_string))
+        if alg == "resolution":
+            truth_value = resolution(kb, query)
+        elif alg == "forward chaining":
+            truth_value = forward_chaining(kb, query)
+        elif alg == "backward chaining":
+            truth_value = backward_chaining(kb, query)
+        elif alg == "iterative backward chaining":
+            truth_value = iterative_backward_chaining(kb, query)
+        else:
+            truth_value = False
+
+        if truth_value == True:
+            possible_genuses.append(query_string)
+
+    return possible_genuses
+
+def deduce_mushroom_species(kb, alg):
+    species = ["amanita sphaerobulbosa",
+               "amanita exitialis",
+               "amanita arocheae",
+               "amanita bisporigera",
+               "amanita magnivelaris",
+               "amanita ocreata",
+               "amanita phalloides",
+               "amanita smithiana",
+               "amanita subjunquillea",
+               "amanita verna",
+               "amanita virosa",
+               "clitocybe dealbata",
+               "clitocybe rivulosa",
+               "cortinarius gentillis",
+               "cortinarius orellanus",
+               "cortinarius rubellus",
+               "cortinarius splendens",
+               "galerina marginata",
+               "galerina sulciceps",
+               "gyromitra esculenta",
+               "lepiota brunneoincarnata",
+               "lepiota castanea",
+               "lepiota helveola",
+               "lepiota subincarnata",
+               "inocybe erubescens",
+               "pholiotina rugosa",
+               "pleurocybella porrigens",
+               "podostroma cornudamae",
+               "troiga venenata"]
+    possible_species = []
+    for s in species:
+        query_string = "species is " + g
+        query = sp.sympify(custom_replace(query_string))
+        if alg == "resolution":
+            truth_value = resolution(kb, query)
+        elif alg == "forward chaining":
+            truth_value = forward_chaining(kb, query)
+        elif alg == "backward chaining":
+            truth_value = backward_chaining(kb, query)
+        elif alg == "iterative backward chaining":
+            truth_value = iterative_backward_chaining(kb, query)
+        else:
+            truth_value = False
+
+        if truth_value == True:
+            possible_species.append(query_string)
+
+    return possible_species
+
 def main():
-    #parser = argparse.ArgumentParser(description="An inference engine for poisonous mushroom identification.")
-    #parser.add_argument("rule file", nargs=1, help="File listing rules.")
-    #parser.add_argument("-m", "--mode", nargs=1, default=0, help="Determines whether to establish facts with a file (-m 0) or interactively (-m 1).")
-    #args = parser.parse_args()
 
     ### Determine whether to run the knowledge system in file or interactive mode
-    ### and generate the knowledge base.
-
+    ### to generate the knowledge base.
     rule_file_name = sys.argv[1]
     mode = raw_input("Interactive mode? ")
     ### Interactive mode
@@ -210,62 +318,76 @@ def main():
         kb = build_knowledge_base(rule_file_name, fact_file_name)
     ### Reject invalid modes
     else:
-        print "Invalid mode. Exiting."
+        print "Invalid knowledge base construction mode. Exiting."
         exit()
-        
-    ### Prompt the user to enter queries
-    print "You will be prompted to enter queries. If you wish to exit, type \"exit\"."
-    while True:
-        query = raw_input("Enter your query: ")
-        if query == "exit":
-            exit()
+       
+    ### Determine whether to use a pre-determined query method--e.g. to generate all possible
+    ### poisons that could be affecting the patient--or to prompt the user to enter whichever
+    ### queries they choose. 
+    query_mode = raw_input("Choose query mode: 'deduce poison type', 'deduce mushroom genus', 'deduce mushroom species', 'custom queries' ")
+    if query_mode == "deduce posion type" or query_mode == "deduce mushroom genus" or query_mode == "deduce mushroom species":
+        algorithm = raw_input("Choose inference algorithm: 'resolution', 'forward chaining', 'backward chaining', 'iterative backward chaining' ")
+        if algorithm == "resolution" or algorithm == "forward chaining" or algorithm == "backward chaining" or algorithm == "iterative backward chaining":
+            if query_mode == "deduce poison type":
+                possible_poisons = deduce_poison_type(kb, algorithm)
+                if possible_poisons:
+                    for p in possible_poisons:
+                        print p
+            elif query_mode == "deduce mushroom genus":
+                possible_genuses = deduce_mushroom_genus(kb, algorithm)
+                if possible_genuses:
+                    for g in possible_genuses:
+                        print g
+            elif query_mode == "deduce mushroom species":
+                possible_species = deduce_mushroom_species(kb, algorithm)
+                if possible_species:
+                    for s in possible_species:
+                        print s
         else:
-            query = sp.sympify(custom_replace(query))
-            algorithm = raw_input("Enter which inference algorithm you want to use: ")
-            if algorithm == "resolution":
-                truth_value = resolution(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            elif algorithm == "forward chaining":
-                truth_value = forward_chaining(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            elif algorithm == "backward chaining":
-                truth_value = backward_chaining(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
-            elif algorithm == "iterative backward chaining":
-                truth_value = iterative_backward_chaining(kb, query)
-                if truth_value == True:
-                    print "Query is entailed by knowledge base."
-                else:
-                    print "Query is not entailed by knowledge base."
+            print "Invalid algorithm specified. Exiting."
+            exit()
+
+    elif query_mode == "custom queries":
+        ### Prompt the user to enter queries
+        print "You will be prompted to enter queries. If you wish to exit, type \"exit\"."
+        while True:
+            query = raw_input("Enter your query: ")
+            if query == "exit":
+                exit()
             else:
-                print "Unsupported algorithm specified."
+                query = sp.sympify(custom_replace(query))
+                algorithm = raw_input("Enter which inference algorithm you want to use: ")
+                if algorithm == "resolution":
+                    truth_value = resolution(kb, query)
+                    if truth_value == True:
+                        print "Query is entailed by knowledge base."
+                    else:
+                        print "Query is not entailed by knowledge base."
+                elif algorithm == "forward chaining":
+                    truth_value = forward_chaining(kb, query)
+                    if truth_value == True:
+                        print "Query is entailed by knowledge base."
+                    else:
+                        print "Query is not entailed by knowledge base."
+                elif algorithm == "backward chaining":
+                    truth_value = backward_chaining(kb, query)
+                    if truth_value == True:
+                        print "Query is entailed by knowledge base."
+                    else:
+                        print "Query is not entailed by knowledge base."
+                elif algorithm == "iterative backward chaining":
+                    truth_value = iterative_backward_chaining(kb, query)
+                    if truth_value == True:
+                        print "Query is entailed by knowledge base."
+                    else:
+                        print "Query is not entailed by knowledge base."
+                else:
+                    print "Unsupported algorithm specified."
+
+    else:
+        print "Invalid query mode specified. Exiting now."
+        exit()
 
 
-#    rules = parse_rule_file(rule_file_name)
-#    facts_from_file = parse_fact_file(fact_file_name)
-#    print "RULES:"
-#    print rules
-#    print "FACTS:"
-#    print facts_from_file
-#
-#    print "TESTING KB BUILDER"
-#    kb_from_file = build_knowledge_base(rule_file_name, fact_file_name)
-#    print kb_from_file
-#
-#    print "TESTING INTERACTIVE KB BUILDER"
-#    kb_interactive = build_knowledge_base_interactive(rule_file_name)
-#    print kb_interactive
-#
-    # print "TESTING INFERENCE ALGORITHMS"
-    # run_inference_test_suite(sys.argv[1])
 
 main()
