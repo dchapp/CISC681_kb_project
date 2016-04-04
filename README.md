@@ -19,7 +19,7 @@ SymPy can be installed via pip, as can Mpmath, or via your Linux distribution's 
 2. http://mpmath.org/
 
 ### Usage
-To use the system, ensure that a properly formatted rules file exists.
+To use the system, ensure that a properly formatted rules file exists and that KB.py is executable. (i.e. chmod +x KB.py)
 
 To begin, run ./KB.py $PATH\_TO\_RULES\_FILE
 
