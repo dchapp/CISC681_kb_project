@@ -20,8 +20,6 @@ One particular application of knowledge systems to diagnostics is in the identif
 
 By constructing a knowledge base of rules--i.e., descriptions of what implies what--and facts--i.e., what is known to be true in the current situation and representing that knowledge base as a sentence in propositional logic, we can leverage inference algorithms to rapidly arrive at non-obvious conclusions--e.g., what poison is effecting a patient. 
 
-
-
 \section{Knowledge Base}
 The precise identification of a mushroom can be a difficult task requiring careful and complete inspection of the mushroom and in some cases inspection of its spores under a microscope or application of reagents to its tissue.~\cite{handbook-mushroom-poison}
 In the context of identifying a poisonous mushroom after ingestion, this complex task is further confounded by the possibility that only an incomplete specimen remains, that an identifying component such as a volva fell off during harvesting, or more simply that the symptoms of mushroom poisoning render self-diagnosis impossible. 
@@ -103,13 +101,18 @@ We were able to implement a knowledge system composed of two major code componen
 By embedding these components in a command line user interface designed with diagnosis in mind, we provide clinicians with the ability to rapidly and correctly identify cases of mushroom poisoning. 
 
 The most current version of the knowledge system code and the \texttt{.tex} and \texttt{.bib} files necessary to generate this document are available at \url{https://github.com/dchapp/cisc681_kb_project}. 
-Though we feel that we have delivered an effective and useful knowledge system, there are architectural elements of the project that warrant future improvement. 
+Though we feel that we have delivered an effective and useful knowledge system, there are two elements of the project that warrant future improvement. 
 
-Namely, we make only the most basic usage of the SymPy API. 
+First, we make only the most basic usage of the SymPy API. 
 Aside from the SymPy types, the \texttt{to\_cnf} function, and the \texttt{sympify} function, all other functionality is hand written. 
 (We use the \texttt{satisfiable} function for correctness testing, and as such do not consider it strictly part of the implementation.) 
 In future development, we would seek to replace our hand written routines for--e.g. extracing symbols from a conjunction of clauses--with optimized SymPy functions if they exist. 
 
+Second, a common property of mushroom poisoning is that it occurs in distinct phases punctuated by periods of apparent recovery. 
+For instance, in amatoxin poisoning there is a an initial phase 8-16 hours after ingestion characterized by extreme gastrointestinal upset--diarrhea, vomiting, malaise.
+Afterwards, the patient is typically asymptomatic for 24 hours before rapidly deteriorating due to acute liver failure. 
+It is during this gap between gastrointestinal symptoms and hepatic symptoms that the patient can have awareness that they have been poisoned \emph{and} treatments can have a high success rate. 
+With this in mind, we would like to refine the knowledge base construction procedure to take into account the time-ordering of symptoms so as to better reflect the real-world diagnosis situation. 
 
 
 \bibliographystyle{IEEEtran}
