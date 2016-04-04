@@ -63,7 +63,7 @@ genus is cortinarius & cap shape is umbonate ==> species is rubellus
 #Cortinarius splendens rule
 genus is cortinarius & host organism is European beech ==> species is splendens
 # Galerina Genus rule
-spore print color is yellow-orange & host organism is felled logs ==> genus is galerina
+spore print color is yellow orange & host organism is felled logs ==> genus is galerina
 #Galerina marginata rule
 genus is galerina & gill color is brown & hymenium is adnexed & odor is flour ==> species is marginata
 #Galerina sulciceps rule
@@ -96,8 +96,8 @@ cap color is white & cap texture is fragile ==> genus is pleurocybella
 genus is pleurocybella & climate is temperate forests ==> species is porrigens
 # Podostroma Genus rule
 cap shape is irregular & cap color is red & spore print color is yellow ==> genus is podostroma
-# Podostroma cornu-damae rule
-genus is podostroma & location is japan ==> species is cornu-damae
+# Podostroma cornudamae rule
+genus is podostroma & location is japan ==> species is cornudamae
 # Trogia Genus rule
 cap shape is irregular & host orgnanism is rotting wood & gill type is attached & climate is subtropical ==> genus is trogia
 #Trogia venenata rule
