@@ -288,16 +288,22 @@ def main():
                 if possible_poisons:
                     for p in possible_poisons:
                         print p
+                else:
+                    print "The poison type could not be deduced."
             elif query_mode == "deduce mushroom genus":
                 possible_genuses = deduce_mushroom_genus(kb, algorithm)
                 if possible_genuses:
                     for g in possible_genuses:
                         print g
+                else:
+                    print "The mushroom genus could not be deduced."
             elif query_mode == "deduce mushroom species":
                 possible_species = deduce_mushroom_species(kb, algorithm)
                 if possible_species:
                     for s in possible_species:
                         print s
+                else:
+                    print "The mushroom species could not be deduced."
         else:
             print "Invalid algorithm specified. Exiting."
             exit()
@@ -311,7 +317,7 @@ def main():
                 exit()
             else:
                 query = sp.sympify(custom_replace(query))
-                algorithm = raw_input("Enter which inference algorithm you want to use: ")
+                algorithm = raw_input("Enter which inference algorithm you want to use: 'resolution', 'forward chaining', 'backward chaining', 'iterative backward chaining' ")
                 if algorithm == "resolution":
                     truth_value = resolution(kb, query)
                     if truth_value == True:
