@@ -4,7 +4,6 @@ import sys
 import sympy as sp
 
 from Inference import *
-from TestCases import *
 from Utilities import *
 from MushroomFacts import *
 
