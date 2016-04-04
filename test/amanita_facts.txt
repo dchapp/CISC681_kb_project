@@ -1,0 +1,4 @@
+spore print color is white
+gill type is unattached
+gill color is white
+stem color is white
