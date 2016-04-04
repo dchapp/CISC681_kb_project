@@ -237,7 +237,7 @@ def deduce_mushroom_species(kb, alg):
                "troiga venenata"]
     possible_species = []
     for s in species:
-        query_string = "species is " + g
+        query_string = "species is " + s
         query = sp.sympify(custom_replace(query_string))
         if alg == "resolution":
             truth_value = resolution(kb, query)
@@ -260,7 +260,7 @@ def main():
     ### Determine whether to run the knowledge system in file or interactive mode
     ### to generate the knowledge base.
     rule_file_name = sys.argv[1]
-    mode = raw_input("Interactive knowledge base construction mode? ")
+    mode = raw_input("Interactive knowledge base construction mode? Enter 'yes' or 'no' ")
     ### Interactive mode
     if mode == "yes":
         kb = build_knowledge_base_interactive(rule_file_name)
