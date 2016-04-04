@@ -311,7 +311,7 @@ def main():
                 exit()
             else:
                 query = sp.sympify(custom_replace(query))
-                algorithm = raw_input("Enter which inference algorithm you want to use: ")
+                algorithm = raw_input("Enter which inference algorithm you want to use: 'resolution', 'forward chaining', 'backward chaining', 'iterative backward chaining' ")
                 if algorithm == "resolution":
                     truth_value = resolution(kb, query)
                     if truth_value == True:
