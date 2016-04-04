@@ -15,8 +15,11 @@
 \maketitle
 
 \section{Introduction}
-Due to the wide variety of human ailments and the limited capacity of human medical expertise, artificial intelligence knowledge systems (KS) are increasingly finding use in real diagnostic situations.~\cite{expert-systems-in-diagnosis}
-One particular application of KS to diagnostics is in the identification of poisonous fungi, which we explore in this work. 
+Due to the wide variety of human ailments and the limited capacity of human medical expertise, artificial intelligence knowledge systems are increasingly finding use in real diagnostic situations.~\cite{expert-systems-in-diagnosis}
+One particular application of knowledge systems to diagnostics is in the identification of poisonous fungi, which we explore in this work. 
+
+By constructing a knowledge base of rules--i.e., descriptions of what implies what--and facts--i.e., what is known to be true in the current situation and representing that knowledge base as a sentence in propositional logic, we can leverage inference algorithms to rapidly arrive at non-obvious conclusions--e.g., what poison is effecting a patient. 
+
 
 
 \section{Knowledge Base}
@@ -79,9 +82,12 @@ Our implementation guarantees this property of the knowledge base by ensuring th
 Moreover, linear time is the worst case scenario for backward chaining. 
 In many cases, the backward chaining algorithm will terminate much faster, though this is strongly dependent on rules and facts that exist within the knowledge base. 
 
-However, the performance of the resolution algorithm is much worse. (continued discussion goes here)
+The performance of the resolution algorithm is much worse. 
+The performance penalty is mainly rooted in the fact that the resolution algorithm exhaustively considers pairs of clauses in the argument sentence. 
+For a sentence of $n$ clauses, there are $n \choose 2$ $= \frac{n^2}{2} + \frac{n}{2}$ possible pairs of clauses. 
+Hence, the resolution algorithm exhibits quadratic complexity in general, which agrees with the runtimes we observed in testing. 
 
-Run time is not the only performance concern to be addressed. 
+However run time is not the only performance concern to be addressed. 
 The memory requirements of the inference algorithms also vary which, were this knowledge system to be deployed on embedded device in a clinincal environment, would need to be taken into account. 
 In particular, we provide two versions of the backward chaining algorithm--a recursive implementation and a purely iterative implementation. 
 Both provide correct performance, but the recursive implementation's many function calls can introduces intolerable overhead in a resource constrained environment. 
