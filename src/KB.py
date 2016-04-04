@@ -277,7 +277,10 @@ def main():
     ### poisons that could be affecting the patient--or to prompt the user to enter whichever
     ### queries they choose. 
     query_mode = raw_input("Choose query mode: 'deduce poison type', 'deduce mushroom genus', 'deduce mushroom species', 'custom queries' ")
-    if query_mode == "deduce posion type" or query_mode == "deduce mushroom genus" or query_mode == "deduce mushroom species":
+
+    print "QUERY MODE IS: " + str(query_mode)
+
+    if query_mode == "deduce poison type" or query_mode == "deduce mushroom genus" or query_mode == "deduce mushroom species":
         algorithm = raw_input("Choose inference algorithm: 'resolution', 'forward chaining', 'backward chaining', 'iterative backward chaining' ")
         if algorithm == "resolution" or algorithm == "forward chaining" or algorithm == "backward chaining" or algorithm == "iterative backward chaining":
             if query_mode == "deduce poison type":
