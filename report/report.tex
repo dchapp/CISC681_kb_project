@@ -2,6 +2,7 @@
 
 \usepackage{amsmath, amsfonts}
 \usepackage{graphicx}
+\usepackage{url}
 
 % Force 1 inch margins
 %\usepackage[margin=1in]{geometry}
@@ -87,7 +88,17 @@ We conjectured that due to the need to potentially host many users simultaneousl
 Discovery of this limitation inspired us to implement an iterative backward chaining algorithm, which is able to pass the entire test suite even in the online IDE environment. 
 
 
+\section{Conclusions and Future Work}
+We were able to implement a knowledge system composed of two major code components: 1). an ingestion engine for aggregating a knowledge base of facts and rules into a propositional logic sentence, and 2). a suite of inference algorithms which take as arguments the knowledge base and a user's query and decide whether or not the query follows. 
+By embedding these components in a command line user interface designed with diagnosis in mind, we provide clinicians with the ability to rapidly and correctly identify cases of mushroom poisoning. 
 
+The most current version of the knowledge system code and the \texttt{.tex} and \texttt{.bib} files necessary to generate this document are available at \url{https://github.com/dchapp/cisc681_kb_project}. 
+Though we feel that we have delivered an effective and useful knowledge system, there are architectural elements of the project that warrant future improvement. 
+
+Namely, we make only the most basic usage of the SymPy API. 
+Aside from the SymPy types, the \texttt{to\_cnf} function, and the \texttt{sympify} function, all other functionality is hand written. 
+(We use the \texttt{satisfiable} function for correctness testing, and as such do not consider it strictly part of the implementation.) 
+In future development, we would seek to replace our hand written routines for--e.g. extracing symbols from a conjunction of clauses--with optimized SymPy functions if they exist. 
 
 
 
