@@ -185,6 +185,8 @@ def run_inference_test_suite(query):
     ### Print test results
     #print "Testing resolve:" 
     #TEST_resolve()
+    print "SymPy Reference Value"
+    print not sp.satisfiable((kb & ~q))
     print "Testing forward chaining:"
     TEST_forward_chaining(kb, q)
     print "Testing recursive backward chaining:"
@@ -196,8 +198,8 @@ def run_inference_test_suite(query):
     #print resolution(kb, q)
 
 
-    print "Testing DPLL"
-    print dpll_satisfiable((kb & ~q))
+    #print "Testing DPLL"
+    #print dpll_satisfiable((kb & ~q))
     
     """
     print parse_fact_file("../test/facts1.txt")

@@ -140,6 +140,13 @@ def pl_true_int_repr(clause, model={}):
 
     """
     if len(clause) == 1:
+
+        ### added
+        clause = list(clause)
+        print clause
+        print type(clause)
+        ### end added
+
         c = clause[0]
         if c in model: return model.get(c)
         if -c in model: return not model.get(-c)
