@@ -21,8 +21,8 @@ SymPy can be installed via pip, as can Mpmath, or via your Linux distribution's 
 ### Usage
 To use the system, ensure that a properly formatted rules file exists and that KB.py is executable. (i.e. chmod +x KB.py)
 
-To begin, run ./KB.py $PATH\_TO\_RULES\_FILE
+To begin, run ./KB.py $PATH\_TO\_RULES\_FILE (To use the rules file we provide, use ../test/mushroom\_rules.txt as the rules file)
 
-You will be prompted to select a method (interactive or from file) to build the knowledge base. If you select interactive mode by answering 'yes' you will be prompted to answer questions about the properties of the poisonous mushroom and the symptoms the patient is exhibiting. If you answer 'no', you will be prompted to provide the location of a properly formatted facts file. 
+You will be prompted to select a method (interactive or from file) to build the knowledge base. If you select interactive mode by answering 'yes' you will be prompted to answer questions about the properties of the poisonous mushroom and the symptoms the patient is exhibiting. If you answer 'no', you will be prompted to provide the location of a properly formatted facts file. (Sample facts files are provided in the test directory)
 
 Once the knowledge base is constructed, you will be prompted to select from one of several query types. There are built-in options to perform multiple related queries automatically--e.g. to perform all queries necessary to determine which possible genuses of mushroom you are dealing with. Alternatively, you can enter arbitrary queries in sequence. For any query, you will be prompted to select which inference algorithm to use to determine whether or not the knowledge base entails the query.
