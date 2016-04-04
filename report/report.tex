@@ -55,13 +55,28 @@ Once a CNF representation of the knowledge base is generated, the user is prompt
 
 \subsection{Inference Algorithms}
 We implement three inference algorithms in this knowledge system: resolution, forward chaining, and backward chaining. 
-Our implementations of resolution and forward chaining are based upon the pseudocode in Russell and Norvig~\cite{russell-norvig-aima}, while our implementation of backward chaining is based primarily on the notes and slides provided in class. 
+We implement both recursive and iterative implementations of backward chaining.
+Our implementations of resolution and forward chaining are based upon the pseudocode in Russell and Norvig~\cite{russell-norvig-aima}, while both of our implementations of backward chaining is based primarily on the notes and slides provided in class. 
 
 The inference algorithms we implement are able to decide entailment of queries based on the relationship between entailment and boolean satisfiability. 
 Specifically, suppose $kb$ is a knowledge base represented as a propositional logic sentence in CNF, and that $q$ is a query represented as a propositional logic literal.
 Then $kb \models q$ is equivalent to the unsatisfiability of $kb \wedge \neg q$. 
 
 \subsection{Modes of Use}
+The knowledge system is meant to be run from a command line shell such as Bash. 
+It is invoked with one argument--the file containing the inference rules.
+Once the program is running, a series of prompts instruct the user to provide facts about the situation at hand to build up the knowledge base in conjunction with the rules previously provided. 
+The user can either provide a file--formatted similarly to the rules file--containing the facts or can answer a series of questions to decide the fact set interactively. 
+
+Once the rules and facts are established, the user is given the option to enter a variety of queries. Though the knowledge system has a mode for allowing the user to enter arbitrary queries, the system also provides batch query options for poisoning type, mushroom genus, and mushroom species.
+These query modes automatically query for all poisoning types, mushrooom genuses, and mushroom species against the knowledge base, returning a list of all poisons, genuses, and species respectively that are entailed.
+This can be useful when the knowledge base consists of both incomplete information about the patient's symptoms and incomplete information about the mushroom's properties. 
+
+Once the desired query or queries are established, the system will prompt the user to choose an inference algorithm to use. 
+For optimal performance on a memory-constrained platform, the iterative backward chaining algorithm is recommended. 
+Once an algorithm is selected, the system will respond based on the query mode.
+If a batch query mode was selected, the system will print the results--e.g. mushroom genuses--that are entailed.
+If the custom query mode was selected, the system will print True if the query is entailed and False if it is not, and immediately prompt the user to enter another custom query. 
 
 
 \section{Evaluation}
