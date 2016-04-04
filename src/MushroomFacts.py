@@ -1,3 +1,6 @@
+"""
+Function used for generating user prompts in interactive mode.
+"""
 def define_properties():
     mushroom_properties = ["gill color",
                            "gill type",
