@@ -101,7 +101,7 @@ genus is podostroma & location is japan ==> species is podostroma cornudamae
 # Trogia Genus rule
 cap shape is irregular & host orgnanism is rotting wood & gill type is attached & climate is subtropical ==> genus is trogia
 #Trogia venenata rule
-genus is trogia and cap color is white & cap texture is smooth ==> species is troiga venenata
+genus is trogia & cap color is white & cap texture is smooth ==> species is troiga venenata
 # Amanita from toxin rule
 in north america & alpha amanitin poisoning ==> genus is amanita
 # Clitocybe from toxin rule
